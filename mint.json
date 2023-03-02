@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Berri AI",
   "logo": {
-    "dark": "/logo/berri_ai_logo.png",
-    "light": "/logo/berri_ai_logo.png"
+    "dark": "/logo/berri_ai_logo_white.png",
+    "light": "/logo/berri_ai_logo_dark.png"
   },
   "favicon": "/favicon.png",
   "colors": {
