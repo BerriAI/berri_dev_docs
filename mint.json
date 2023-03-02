@@ -36,7 +36,7 @@
   "navigation": [
     {
       "group": "Tutorials",
-      "pages": ["tutorials/mixpanel_tutorial"]
+      "pages": ["api-reference/tutorials/mixpanel_tutorial"]
     },
     {
       "group": "Endpoints",
