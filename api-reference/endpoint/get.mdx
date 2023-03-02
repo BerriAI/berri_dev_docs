@@ -1,100 +1,126 @@
 ---
-title: "Get User"
-api: "GET https://api.mintlify.com/api/user"
-description: "This endpoint gets or creates a new user."
+title: "CSV / Folder Upload"
+api: "POST https://data-ingest-server-customer-support-template-v-2-mpvf.zeet-berri.zeet.app/berri_pipeline_folder"
+contentType: "form-data"
+description: "This endpoint create a chatGPT app for a zip folder or csv file"
 ---
 
-### Body
+### Use Cases
 
-<ParamField body="name" type="string">
-  This is the name of the user group.
+**3. Customer Support Bot**
+Use Case: Good for doing QA on a folder of documents (.zip file containing .pdf, .docx, .txt, .pptx files)
+
+**Spreadsheet QA**
+Use Case: Good for doing QA on a .csv (e.g. which product is showing the highest MoM growth?, etc.)
+
+**Advanced Editor**
+Use Case: If you want to tinker and improve results for your Berri app. 
+
+
+### Query
+
+<ParamField query="user_email" type="string">
+  Pass in your work / school email.
 </ParamField>
 
-<ParamField body="user_group_id" type="string">
-  This is the ID you use to identify this user group in your database.
+<ParamField query="agent_type" type="string">
+  Based on your intended scenario, you might need different agents. An agent is the wrapper Berri uses to query your data. Below, I'll outline how you should think about this.
+  
+  There are currently 3 types of agents you can set your app to: 
+  1. simple_support: This should cover most scenarios. It takes your question -> queries the data you uploaded -> returns a response. 
+  2. complex_support: This covers scenarios where you expect to be dealing with complex questions (e.g. those that require multiple sub-questions to be answered before returning a full response). Eg.: What is the age of the actor that plays Meg in Family Guy? (Requires 2 pieces of information: 1. who is the actor that plays Meg in Family Guy? 2. What is their age?)
+  3. data_analysis_agent: This is for .csv files. If you want to ask questions that require conditional search, reasoning over the entire data, etc. (e.g. which product showed the highest YoY growth? which artist do i listen to the most? etc.)
+
 </ParamField>
 
-<ParamField body="mapping" type="object">
-  This is a JSON mapping of schema id to either the data source that this user group should be
-  associated with or id of the datasource you provided when creating it.
+<ParamField query="search_type" type="string" optional>
+  Want to improve your Berri app results? Use this! By defining search_type, you'll be able to control how you want your agent to search on your data (mainly effective for simple/complex support agents).
+
+  There are currently 3 types of search strategies you can set your app to: 
+  1. simple_chunk: This is the default. It involves breaking your data into small chunks and querying against it.
+  2. qa_gen: For every chunk, we generate potential questions a user might ask about it. We then store both the chunk + generated questions together. This helps improve search results when real user questions come in.
+  3. summarize: For every chunk, we summarize it and store the summaries. This is useful if you expect your data to have a lot of noise, which might impact search results. This is useful for processing code.
 </ParamField>
 
-<ParamField body="properties" type="object">
-  This is a JSON object for properties assigned to this user group. These will be accessible through
-  variables in the dashboards and SQL editor
+
+<ParamField body="file" type="form-data">
+  Upload the file (.csv or .zip) (e.g. Berri_Financial_Statement.csv)
 </ParamField>
+
 
 ### Response
 
-<ResponseField name="success" type="number">
-  Indicates whether the call was successful. 1 if successful, 0 if not.
+<ResponseField name="api_endpoint" type="string">
+  This will return an api endpoint which you can use to query your app.
 </ResponseField>
 
-<ResponseField name="new_user_group" type="boolean">
-  Indicates whether a new user group was created.
+<ResponseField name="website_endpoint" type="string">
+  This will return a website endpoint which you can use for quick prototyping.  
 </ResponseField>
 
-<ResponseField name="user_group" type="object">
-
-The contents of the user group
-
-<Expandable title="Toggle object">
-
-<ResponseField name="team_id" type="number">
-  This is the internal ID for this user group. You don't need to record this information, since
-  you will not need to use it.
-</ResponseField>
-
-<ResponseField name="token" type="string">
-  This is the user group token (userGroupToken or USER_GROUP_TOKEN) that will be used to identify
-  which user group is viewing the dashboard. You should save this on your end to use when rendering
-  an embedded dashboard.
-</ResponseField>
-
-<ResponseField name="name" type="string">
-  This is the name of the user group provided in the request body.
-</ResponseField>
-
-<ResponseField name="provided_id" type="string">
-  This is the user_group_id provided in the request body.
-</ResponseField>
-
-<ResponseField name="properties" type="JSON or null">
-  This is the properties object if it was provided in the request body
-</ResponseField>
-
-</Expandable>
-
-</ResponseField>
-
+A sample request for creating a Berri app from a single file upload (a pdf in this case).
 <RequestExample>
 
-```bash Example Request
-curl --location --request GET 'https://api.mintlify.com/api/user' \
---header 'Content-Type: application/json' \
---header 'Authorization: Token <token>' \
---data-raw '{
-    "user_group_id": "example_1",
-    "name": "Example 1",
-    "mapping": {"40": "213", "134": "386"},
-    "properties": {"filterValue": "value"}
-}'
+```bash CSV Upload Request
+curl -X POST \
+  'https://data-ingest-server-customer-support-template-v-2-mpvf.zeet-berri.zeet.app/berri_pipeline_folder?user_email={user_email}&agent_type={agent_type}' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -F 'file=Berri_Financial_Statement.csv'
 ```
+```javascript 
+let endpoint = `https://data-ingest-server-customer-support-template-v-2-mpvf.zeet-berri.zeet.app/berri_pipeline_folder?user_email=${email}&agent_type=${agentType}`
+if (searchType) {endpoint += `&search_type=${searchType}`}
+if (fileContent !== null) {
+  var formdata = new FormData();
+  formdata.append("file", fileContent);
+  formdata.append("prompt", prompt);
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  };
+  // @ts-ignore
+  fetch(endpoint, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      result = "https://" + result.website_endpoint
+      console.log(result)
+      setIsLoading(false);
+      setResult(result);
+    })
+    .catch(error => {
+      console.log('error', error);
+    });
+}```
 
 </RequestExample>
 
+A sample request for creating a Berri app from an API url
+<RequestExample>
+```bash API Url Request
+curl -X POST \
+  'https://dataingestserver.ishaan-jaff.repl.co/berri_pipeline?user_email=krrishdholakia@gmail.com&api_url=https://api.semanticscholar.org/graph/v1/paper/search?query=covid%26year=2020-2023%26openAccessPdf%26fieldsOfStudy=Physics,Philosophy%26fields=title,year,authors' \
+```
+</RequestExample>
+
+A sample request for creating a Berri app from a website url
+<RequestExample>
+```bash Website Url Request 
+curl -X POST \
+  'https://dataingestserver.ishaan-jaff.repl.co/berri_pipeline?user_email=krrishdholakia@gmail.com&input_url=https://www.tryfondo.com/guides/founders-guide-delaware-franchise-tax' \
+  -H 'Postman-Token: 52871bf0-265d-4b5b-9c78-df31d81f7a95' \
+  -H 'cache-control: no-cache'
+```
+</RequestExample>
+
+This is a real response from Berri. Feel free to try the website_endpoint (hint: ask it about covid)
 <ResponseExample>
 
 ```json Response
 {
-  "success": 1,
-  "new_user_group": true,
-  "user_group": {
-    "team_id": 3,
-    "token": "<user_group_token_to_auth_dashboard>",
-    "name": "Example 1",
-    "provided_id": "example_1"
-  }
+    "api_endpoint": "chat.berri.ai/aHR0cHM6Ly9zaGFyZWRpbmZyYXN0b3JlcXVlcnktcXFzMy56ZWV0LWJlcnJpLnplZXQuYXBwL2JlcnJpX3F1ZXJ5P3Byb2pfcGF0aD1pbmRleGVzL2tycmlzaGRob2xha2lhQGdtYWlsLmNvbS82NjJmMDZmMi04MGQ0LTQxMzQtYmYxMi0xMWZiM2JhMWEyODM=&query=<user_query>",
+    "website_endpoint": "chat.berri.ai/aHR0cHM6Ly9zaGFyZWRpbmZyYXN0b3JlcXVlcnktcXFzMy56ZWV0LWJlcnJpLnplZXQuYXBwL2JlcnJpX3F1ZXJ5P3Byb2pfcGF0aD1pbmRleGVzL2tycmlzaGRob2xha2lhQGdtYWlsLmNvbS82NjJmMDZmMi04MGQ0LTQxMzQtYmYxMi0xMWZiM2JhMWEyODM="
 }
 ```
 
