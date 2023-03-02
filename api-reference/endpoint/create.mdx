@@ -46,7 +46,7 @@ Use Case: If you want to tinker and
 
 <RequestExample>
 
-```bash Example Request
+```bash Single File Upload Request
 curl -X POST \
   'https://dataingestserver.ishaan-jaff.repl.co/berri_pipeline?user_email=krrishdholakia@gmail.com' \
   -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
@@ -57,9 +57,19 @@ curl -X POST \
 
 A sample request for creating a Berri app from an API url
 <RequestExample>
-```bash Example Request
+```bash API Url Request
 curl -X POST \
   'https://dataingestserver.ishaan-jaff.repl.co/berri_pipeline?user_email=krrishdholakia@gmail.com&api_url=https://api.semanticscholar.org/graph/v1/paper/search?query=covid%26year=2020-2023%26openAccessPdf%26fieldsOfStudy=Physics,Philosophy%26fields=title,year,authors' \
+```
+</RequestExample>
+
+A sample request for creating a Berri app from a website url
+<RequestExample>
+```bash Website Url Request 
+curl -X POST \
+  'https://dataingestserver.ishaan-jaff.repl.co/berri_pipeline?user_email=krrishdholakia@gmail.com&input_url=https://www.tryfondo.com/guides/founders-guide-delaware-franchise-tax' \
+  -H 'Postman-Token: 52871bf0-265d-4b5b-9c78-df31d81f7a95' \
+  -H 'cache-control: no-cache'
 ```
 </RequestExample>
 
