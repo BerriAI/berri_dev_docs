@@ -35,6 +35,10 @@
   ],
   "navigation": [
     {
+      "group": "API Documentation",
+      "pages": ["api-reference/api_intro"]
+    },
+    {
       "group": "Tutorials",
       "pages": ["api-reference/tutorials/mixpanel_tutorial"]
     },
