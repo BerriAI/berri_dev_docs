@@ -68,7 +68,8 @@ curl -X POST \
   -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
   -F 'file=Berri_Financial_Statement.csv'
 ```
-```javascript 
+```
+javascript 
 let endpoint = `https://data-ingest-server-customer-support-template-v-2-mpvf.zeet-berri.zeet.app/berri_pipeline_folder?user_email=${email}&agent_type=${agentType}`
 if (searchType) {endpoint += `&search_type=${searchType}`}
 if (fileContent !== null) {
@@ -92,7 +93,8 @@ if (fileContent !== null) {
     .catch(error => {
       console.log('error', error);
     });
-}```
+}
+```
 
 </RequestExample>
 
