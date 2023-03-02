@@ -39,15 +39,15 @@
       "pages": ["api-reference/api_intro"]
     },
     {
-      "group": "Tutorials",
-      "pages": ["api-reference/tutorials/mixpanel_tutorial"]
-    },
-    {
       "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/csv_or_folder_upload",
         "api-reference/endpoint/file_upload"
       ]
+    },
+    {
+      "group": "Tutorials",
+      "pages": ["api-reference/tutorials/mixpanel_tutorial"]
     }
   ],
   "footerSocials": {
