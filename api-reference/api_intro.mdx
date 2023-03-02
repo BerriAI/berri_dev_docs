@@ -1,6 +1,6 @@
 ---
 title: "Berri AI API Documentation"
-description: "Berri AI is a platform to rapidly spin up chatGPT apps for your data. Below you'll find tutorials and API documentation to help you spin up a chatGPT app in minutes."
+description: "Berri AI is a platform to rapidly spin up chatGPT apps for your data. Below you'll find tutorials and API documentation to help you spin up a chatGPT app **on your data / your user's data** in minutes."
 ---
 
 What does a Berri API call give you? 
@@ -22,8 +22,7 @@ What does a Berri API call give you?
 
 </ResponseExample>
 
-
-Berri offers you 2 primary ways of creating a chatGPT app
+Berri offers you 2 primary ways of creating a chatGPT app **on your data**.
 
 ### 1. [Website / Single File Upload](endpoint/file_upload)
 Use Case: Good for doing QA on website (e.g. company website) or single documents (e.g. .pdf, .docx, .txt, .pptx, .csv). 
@@ -41,5 +40,15 @@ Today, we offer presets for `customer support` and `spreadsheet qa`. Look at our
 ### [Mixpanel Analysis Tutorial](tutorials/mixpanel_tutorial)
 
 Spin up a chatGPT app for all your customer's mixpanel data in minutes. 
+
+## Why use Berri vs. raw ChatGPT? 
+
+Since chatGPT has a limited context window (~4k tokens), it's hard to pass large amounts of information (e.g. Database, notion docs, etc.) into it. Berri abstracts the complexity of getting chatGPT to work on your large data, with a simple API endpoint. Want to tinker / improve results? reach out @ krrish@berri.ai, and we'll help you get set-up.
+
+<Frame caption="Side-by-side comparison of Berri vs. Raw ChatGPT on your financial data.">
+  <img src="../images/berri_vs_chatgpt.png" />
+</Frame>
+
+
 
 **Note**: If it takes you longer than 5 minutes to spin up your app, email us a screenshot @ krrish@berri.ai and we'll buy you coffee wherever you are.
