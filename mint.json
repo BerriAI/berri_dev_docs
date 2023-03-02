@@ -35,11 +35,11 @@
   ],
   "navigation": [
     {
-      "group": "API Documentation",
-      "pages": ["api-reference/api_intro"]
+      "group": "Tutorials",
+      "pages": ["tutorials/mixpanel_tutorial"]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/csv_or_folder_upload",
         "api-reference/endpoint/file_upload"
