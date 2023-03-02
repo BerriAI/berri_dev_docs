@@ -1,20 +1,64 @@
 ---
 title: "Mixpanel Analysis Tutorial"
-description: "Below you'll find tutorials and API documentation to help you spin up a chatGPT app in minutes."
+description: "Spin up a chatGPT App to analyze your user's Mixpanel data in minutes."
 ---
 
-Berri offers you 2 primary ways of creating a chatGPT app
+```python
 
-### 1. [Website / Single File Upload](api-reference/endpoint/file_upload)
-Use Case: Good for doing QA on website (e.g. company website) or single documents (e.g. .pdf, .docx, .txt, .pptx, .csv). 
+# Allow a user to pass in their mixpanel api token 
+# get past 7d data 
+# save it as a spreadsheet 
+# call berri pipeline folder with the spreadsheet
+from mixpanel import Mixpanel
+import csv
+from io import StringIO
+import requests
+import tempfile
+from pathlib import Path
+try:
+    import json
+except ImportError:
+    import simplejson as json
 
 
-### 2. [Folder Upload](api-reference/endpoint/csv_or_folder_upload)
-Use Case: Good for doing QA on multiple data types at once. More control offered. 
+api_token = "<your_users_mixpanel_api_token>"
+user_email = "<your_email>"
 
-# Scenarios
-Our API endpoints let you spin up chatGPT apps for any scenario you might envision. However, we also provide presets for common scenarios. 
+def get_mixpanel_data(api_token: str, user_email: str):
+  encoded_secret = api_token.encode()
+  # byteAPISecret = bytes(encoded_secret + ':', "utf-8")
+  api = Mixpanel(api_secret=encoded_secret)
+  data = api.request(['export'], {
+      'to_date': "2023-03-01",
+      'from_date': "2023-02-28"
+  })
+  
+  flattened_list = []
+  csv_col_names = set()
+  for d in data: 
+    flat_item = {"event": d["event"]}
+    flat_item.update(d["properties"])
+    for item in flat_item.keys():
+      csv_col_names.add(item)
+    flattened_list.append(flat_item)
+  #write data to a csv file
+  url = 'https://data-ingest-server-customer-support-template-v-2-mpvf.zeet-berri.zeet.app/berri_pipeline_folder?user_email={user_email}&agent_type=data_analysis_agent'
+  
+  csv_data = StringIO()
+  writer = csv.DictWriter(csv_data, fieldnames=csv_col_names)
+  writer.writeheader()
+  for row in flattened_list:
+      writer.writerow({**row})
+  
+  files = {'file': ('mixpanel_data.csv', csv_data.getvalue(), 'text/csv')}
+  
+  response = requests.post(url, files=files)
+  print("response: ", response)
+  result = response.json()
 
-Today, we offer presets for `customer support` and `spreadsheet qa`. Look at our endpoint documentation to cover these in more detail. 
+  print("result from dqa", result)
+  return result
+  
+get_mixpanel_data(api_token, user_email)
 
-**Note**: If it takes you longer than 5 minutes to spin up your app, email us a screenshot @ krrish@berri.ai and we'll buy you coffee wherever you are.
+```
