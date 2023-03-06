@@ -1,0 +1,101 @@
+---
+title: "Embed your Berri App into your Website"
+description: "This will walk you through embedding your Berri App into your website in minutes. If it takes you more than 5 minutes, email us @ krrish@berri.ai, and I'll buy you coffee."
+---
+
+The fastest way to embed berri into your website is through an iframe. 
+
+Here's what you need to do to get embedded: 
+
+## Step 1: Grab your Berri App URL 
+
+## Step 2: Replace src with your app url
+
+This is the code you need: 
+```html
+
+<iframe
+	src="<your_berri_app_url>"
+	frameborder="0"
+	width="850"
+	height="450"
+></iframe>
+```
+
+For a given berri app url `https://chat.berri.ai/aHR0cHM6Ly9zaGFyZWRkYnN0b3JlcXVlcnktN2JlYS04aGp3LnplZXQtYmVycmkuemVldC5hcHAvYmVycmlfcXVlcnk_cHJval9wYXRoPWluZGV4ZXMva3JyaXNoZGhvbGFraWFAZ21haWwuY29tL2Q0N2I2NTUxLWEyYjQtNDBjZC1hMzlkLTI3ZTMyMzQyNDgzMSZhZ2VudF90eXBlPWNvbXBsZXhfc3VwcG9ydA==`
+
+This is what it would look like: 
+```html
+<iframe
+	src="https://chat.berri.ai/aHR0cHM6Ly9zaGFyZWRkYnN0b3JlcXVlcnktN2JlYS04aGp3LnplZXQtYmVycmkuemVldC5hcHAvYmVycmlfcXVlcnk_cHJval9wYXRoPWluZGV4ZXMva3JyaXNoZGhvbGFraWFAZ21haWwuY29tL2Q0N2I2NTUxLWEyYjQtNDBjZC1hMzlkLTI3ZTMyMzQyNDgzMSZhZ2VudF90eXBlPWNvbXBsZXhfc3VwcG9ydA=="
+	frameborder="0"
+	width="850"
+	height="450"
+></iframe>
+```
+
+## Step 3: Embed into your website 
+
+Just paste your code into your website. For example, if you're trying to embed this into a no-code website like Typedream, this is what it would look like: 
+
+<img src="../../images/typedream_website_embed.png" />
+
+```python
+
+# Allow a user to pass in their mixpanel api token 
+# get past 7d data 
+# save it as a spreadsheet 
+# call berri pipeline folder with the spreadsheet
+from mixpanel import Mixpanel
+import csv
+from io import StringIO
+import requests
+import tempfile
+from pathlib import Path
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
+
+api_token = "<your_users_mixpanel_api_token>"
+user_email = "<your_email>"
+
+def get_mixpanel_data(api_token: str, user_email: str):
+  encoded_secret = api_token.encode()
+  # byteAPISecret = bytes(encoded_secret + ':', "utf-8")
+  api = Mixpanel(api_secret=encoded_secret)
+  data = api.request(['export'], {
+      'to_date': "2023-03-01",
+      'from_date': "2023-02-28"
+  })
+  
+  flattened_list = []
+  csv_col_names = set()
+  for d in data: 
+    flat_item = {"event": d["event"]}
+    flat_item.update(d["properties"])
+    for item in flat_item.keys():
+      csv_col_names.add(item)
+    flattened_list.append(flat_item)
+  #write data to a csv file
+  url = 'https://data-ingest-server-customer-support-template-v-2-mpvf.zeet-berri.zeet.app/berri_pipeline_folder?user_email={user_email}&agent_type=data_analysis_agent'
+  
+  csv_data = StringIO()
+  writer = csv.DictWriter(csv_data, fieldnames=csv_col_names)
+  writer.writeheader()
+  for row in flattened_list:
+      writer.writerow({**row})
+  
+  files = {'file': ('mixpanel_data.csv', csv_data.getvalue(), 'text/csv')}
+  
+  response = requests.post(url, files=files)
+  print("response: ", response)
+  result = response.json()
+
+  print("result from dqa", result)
+  return result
+  
+get_mixpanel_data(api_token, user_email)
+
+```
