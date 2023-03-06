@@ -47,7 +47,7 @@
     },
     {
       "group": "Tutorials",
-      "pages": ["api-reference/tutorials/mixpanel_tutorial"]
+      "pages": ["api-reference/tutorials/mixpanel_tutorial", "api-reference/tutorials/website_embed"]
     }
   ],
   "footerSocials": {
