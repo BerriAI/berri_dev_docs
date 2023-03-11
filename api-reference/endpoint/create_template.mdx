@@ -1,6 +1,6 @@
 ---
 title: "Create Template"
-api: "POST https://api.berri.ai/create_app"
+api: "POST https://api.berri.ai/create_template"
 contentType: "form-data"
 description: "You can use this to spin up apps for your users with the same configuration"
 ---
@@ -35,30 +35,4 @@ curl -X POST \
   https://api.berri.ai/create_template \
   -H 'Content-Type: multipart/form-data' \
   -F 'app_config={"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}'
-```
-
-```javascript javascript
-let endpoint = `https://api.berri.ai/create_template`
-app_config = {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}
-var formdata = new FormData();
-formdata.append("app_config", app_config);
-var requestOptions = {
-    method: 'POST',
-    body: formdata,
-    redirect: 'follow'
-  };
-fetch(endpoint, requestOptions)
-    .then(response => response.json())
-```
-
-```python python
-import requests
-
-url = "https://api.berri.ai/create_template"
-
-data = {"app_config": {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"} }
-
-response = requests.post(url, data=data)
-
-print(response.text)
 ```
