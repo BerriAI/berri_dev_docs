@@ -19,13 +19,6 @@ description: "This endpoint create a chatGPT app for a single website or file"
   Pass in the api url you are trying to extract responses from (e.g. https://api.semanticscholar.org/graph/v1/paper/search?query=covid%26year=2020-2023%26openAccessPdf%26fieldsOfStudy=Physics,Philosophy%26fields=title,year,authors)
 </ParamField>
 
-<ParamField query="model" type="string" optional>
-  There are currently 2 types of models Berri supports
-  Default: Uses text-davinci-003
-  1. **gpt-3.5-turbo**: Uses chatGPT turbo api
-  2. **text-davinci-003**: uses the GPT-3 model 
-</ParamField>
-
 <ParamField body="file" type="form-data">
   Upload the file (.docx, .pdf, .pptx) (e.g. Berri_Financial_Statement.pdf)
 </ParamField>

@@ -42,7 +42,8 @@
       "group": "Endpoints",
       "pages": [
         "api-reference/endpoint/csv_or_folder_upload",
-        "api-reference/endpoint/file_upload"
+        "api-reference/endpoint/file_upload",
+        "api-reference/endpoint/query"
       ]
     },
     {
