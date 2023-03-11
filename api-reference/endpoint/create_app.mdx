@@ -1,64 +1,43 @@
 ---
 title: "Create App"
-api: "POST https://api.berri.ai/create_app"
+api: "POST https://api.berri.ai/create_template"
 contentType: "form-data"
-description: "You can use this to spin up apps for your users with the same configuration"
+description: "Connect to a single or multiple data sources and spin up chatGPT apps for each of them"
 ---
+
+Here's a link to a replit showing how to create an app: https://replit.com/join/ifraaoxeki-krrishdholakia
 
 ### Query
 
-<ParamField body="app_config" type="string">
-  Create a configuration for your app. This is a JSON dictionary. 
+<ParamField body="template_id" type="string">
+  The app configuration you sent to /create_template is now stored as a template. This is it's unique id. Use it to automatically spin up chatGPT apps with that exact configuration. 
 </ParamField>
 
-<ParamField body="prompt" type="string" optional>
-  Customize the output of your app (e.g. having it follow a certain output pattern - `SQL Expression:`, or make it rewrite answers to follow your style - e.g. `You're an expert at writing exciting LinkedIn posts. Make sure you include emojis in your post.`). 
+<ParamField body="user_email" type="string">
+  Pass in your email, this will map the app you create to your account.
+</ParamField>
+
+<ParamField body="data_source" type="string">
+  Either a file (.pdf, .zip, .pptx, .docx, .txt) or an website/api url
+
+  If it's a file, make sure it's attached as part of the form with the key `data_source`. 
+
+  e.g.
+  ```
+  data = {"template_id": "2c07b89d-d81f-4bfe-ba1d-119195c52f52", "user_email": "krrish@berri.ai"}
+  url = "https://api.berri.ai/create_template"
+  files = {'data_source': open(<your_file_location>, 'rb')}
+  response = requests.post(url, files=files, data=data)
+  ```
 </ParamField>
 
 
 ### Response
 
-<ResponseField name="template_id" type="string">
-  The app configuration you sent is now stored as a template. This is it's unique id. Use it to automatically spin up chatGPT apps with that exact configuration. 
+<ResponseField name="api_endpoint" type="string">
+  This will return an api endpoint which you can use to query your app.
 </ResponseField>
 
-<ResponseField name="app_config" type="dictionary">
-  We return back the app config you sent. This is to confirm the parameters that were sent. We also add a score for the prompt (the lower the better), if one was submitted. 
+<ResponseField name="website_endpoint" type="string">
+  This will return a website endpoint which you can use for quick prototyping.  
 </ResponseField>
-
-A sample request for creating a Berri app from a csv file.
-
-<RequestExample>
-
-```bash curl
-curl -X POST \
-  https://api.berri.ai/create_template \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'app_config={"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}'
-```
-
-```javascript javascript
-let endpoint = `https://api.berri.ai/create_template`
-app_config = {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}
-var formdata = new FormData();
-formdata.append("app_config", app_config);
-var requestOptions = {
-    method: 'POST',
-    body: formdata,
-    redirect: 'follow'
-  };
-fetch(endpoint, requestOptions)
-    .then(response => response.json())
-```
-
-```python python
-import requests
-
-url = "https://api.berri.ai/create_template"
-
-data = {"app_config": {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"} }
-
-response = requests.post(url, data=data)
-
-print(response.text)
-```
