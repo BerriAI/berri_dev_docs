@@ -1,13 +1,13 @@
 ---
 title: "Query your BerriAI APP"
-api: "GET https://sharedinfrastorequery-qqs3.zeet-berri.zeet.app/berri_query"
+api: "GET https://shareddbstorequery-7bea-8hjw.zeet-berri.zeet.app/berri_query"
 description: "How to query your Berri Endpoint"
 ---
 
 ### Query
 <ParamField query="proj_path" type="string">
    This is project id for your Berri App. It's provided in the response after creating your app
-   Example: indexes/ishaan@berri.ai/ee1d9177-1527-4a46-94dc-5c2ab029a00b
+   Example: indexes/ishaan@berri.ai/6663d98e-f3e2-42b9-a79e-2d92199b85fa
 </ParamField>
 
 <ParamField query="model" type="string" optional>
@@ -21,10 +21,10 @@ description: "How to query your Berri Endpoint"
 ```python python
 import requests
 
-url = "https://sharedinfrastorequery-qqs3.zeet-berri.zeet.app/berri_query?
+url = "https://shareddbstorequery-7bea-8hjw.zeet-berri.zeet.app/berri_query"
 
-querystring = {"proj_path": "indexes/ishaan@berri.ai/ee1d9177-1527-4a46-94dc-5c2ab029a00b,
-                "query": "write me 3 questions for this candidate interview",
+querystring = {"proj_path": "indexes/ishaan@berri.ai/6663d98e-f3e2-42b9-a79e-2d92199b85fa",
+                "query": "who is ishaan",
                 "model": "gpt-3.5-turbo"}
 
 response = requests.post(url, params=querystring)
