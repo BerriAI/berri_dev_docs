@@ -1,0 +1,19 @@
+---
+title: "File Configuration"
+description: "Use this if you want to upload a single file - .csv, .pdf. .docx, .txt, .pptx **or** multiple files - .zip"
+---
+
+```json 
+
+{
+    advanced: {
+        intent: “qa_doc” or “qa_spreadsheet” # (! This is required. Always specify your intent)
+        search: default, qa_gen, summarize or default # (Optional)
+        app_type: “simple” or “complex” # (Optional - only for qa_doc)
+    }
+    output_length: # (Optional)
+    prompt: # (Optional - use this to help specify how you want your output to be. We also score your prompt, based on how confused it makes the model - the closer to 0, the better.)
+}
+}
+
+```

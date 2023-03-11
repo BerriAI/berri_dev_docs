@@ -41,14 +41,18 @@
     {
       "group": "Endpoints",
       "pages": [
-        "api-reference/endpoint/csv_or_folder_upload",
-        "api-reference/endpoint/file_upload",
+        "api-reference/endpoint/create_template",
+        "api-reference/endpoint/create_app",
         "api-reference/endpoint/query"
       ]
     },
     {
       "group": "Tutorials",
       "pages": ["api-reference/tutorials/api_tutorial", "api-reference/tutorials/website_embed"]
+    },
+    {
+      "group": "App Configuration",
+      "pages": ["api-reference/app_configurations/app_configurations_intro", "api-reference/app_configurations/file_configuration", "api-reference/app_configurations/url_configuration"]
     }
   ],
   "footerSocials": {
