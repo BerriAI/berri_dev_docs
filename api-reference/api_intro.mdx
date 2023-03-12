@@ -13,16 +13,41 @@ description: "Now it's your time to shine. Keep reading to learn more on how to 
 
 You need to create your app configuration. Go [here](../app_configurations/app_configurations_intro) to learn more. 
 
-```python
+<RequestExample>
+
+```bash
+curl -X POST \
+  https://api.berri.ai/create_template \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'app_config={"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}'
+```
+
+```javascript javascript
+let endpoint = `https://api.berri.ai/create_template`
+app_config = {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}
+var formdata = new FormData();
+formdata.append("app_config", app_config);
+var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  };
+fetch(endpoint, requestOptions)
+    .then(response => response.json())
+```
+
+```python python
+import requests
+
 url = "https://api.berri.ai/create_template"
 
-app_config = {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"} 
-
-data = {"app_config": json.dumps(app_config)}
+data = {"app_config": {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"} }
 
 response = requests.post(url, data=data)
+
 print(response.text)
 ```
+</RequestExample>
 
 ## Step 2: Create an App
 Creating an app requires 3 things: 
