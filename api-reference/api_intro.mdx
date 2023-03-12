@@ -60,8 +60,22 @@ For now, let's do it on a sample pdf.
 
 Ensure that you are reading the file and sending its contents. 
 This works for PDF, DOC, TXT, CSV, and PPTX files.
-```python
-template_id = "307d7a0d-242c-49c8-9108-47b8bf917424"
+
+<CodeGroup>
+
+```bash curl
+curl -X POST \
+  https://api.berri.ai/create_app \
+  -H 'Content-Type: multipart/form-data' \
+  -F template_id=9a5f0111-4e8b-428d-8fda-863773fe41cd \
+  -F user_email=krrish@berri.ai \
+  -F data_source=@/Users/krrishdholakia/Downloads/quizlet_wa_test_1.pdf
+```
+
+```python python
+import requests
+
+template_id = "9a5f0111-4e8b-428d-8fda-863773fe41cd"
 
 url = "https://api.berri.ai/create_app"
 
@@ -73,7 +87,64 @@ response = requests.post(url, files=files, data=data)
 
 print(response.text)
 
+api_endpoint = response.json()["api_endpoint"]
 ```
+```javascript javascript
+const request = require("request");
+
+const template_id = "9a5f0111-4e8b-428d-8fda-863773fe41cd";
+
+const url = "https://api.berri.ai/create_app";
+
+const data = {
+  template_id: template_id,
+  user_email: "krrish@berri.ai"
+};
+
+const files = {
+  data_source: fs.createReadStream("quizlet_wa_test_1.pdf")
+};
+
+const response = request.post({url:url, formData: {data, files}}, function(err, httpResponse, body) {
+  if (err) {
+    return console.error("upload failed:", err);
+  }
+  console.log("Upload successful!  Server responded with:", body);
+});
+
+const api_endpoint = JSON.parse(body)["api_endpoint"];
+```
+
+```javascript node.js
+const request = require('request');
+const fs = require('fs');
+
+const options = {
+  method: 'POST',
+  url: 'https://api.berri.ai/create_app',
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  formData: {
+    template_id: '9a5f0111-4e8b-428d-8fda-863773fe41cd',
+    user_email: 'krrish@berri.ai',
+    data_source: {
+      value: fs.createReadStream('quizlet_wa_test_1.pdf'),
+      options: {
+        filename: 'quizlet_wa_test_1.pdf',
+        contentType: 'application/pdf'
+      }
+    }
+  }
+};
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+
+  console.log(body);
+});
+```
+</CodeGroup>
 
 ## Step 3: Try your app! 
 
