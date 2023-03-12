@@ -18,17 +18,7 @@ Here's a link to a replit showing how to create an app: https://replit.com/join/
 </ParamField>
 
 <ParamField body="data_source" type="string">
-  Either a file (.pdf, .zip, .pptx, .docx, .txt) or an website/api url
-
-  If it's a file, make sure it's attached as part of the form with the key `data_source`. 
-
-  e.g.
-  ```
-  data = {"template_id": "2c07b89d-d81f-4bfe-ba1d-119195c52f52", "user_email": "krrish@berri.ai"}
-  url = "https://api.berri.ai/create_template"
-  files = {'data_source': open(<your_file_location>, 'rb')}
-  response = requests.post(url, files=files, data=data)
-  ```
+  Either a file (.pdf, .zip, .pptx, .docx, .txt) or a website/api url
 </ParamField>
 
 
