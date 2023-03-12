@@ -8,7 +8,7 @@ description: "Use this if you want to query a scraped website, or connect with a
 {
     advanced: {
         intent: “qa_website” or “qa_api”,
-        headers: None or access_token # (Only required if you're using qa_api and it needs OAuth).
+        headers: None or headers including bearer w/ access token # (Only required if you're using qa_api and it needs OAuth).
     }
     output_length: # (Optional)
     prompt: # (Optional - use this to help specify how you want your output to be. We also score your prompt, based on how confused it makes the model - the closer to 0, the better.)
