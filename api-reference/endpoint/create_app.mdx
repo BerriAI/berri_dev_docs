@@ -70,6 +70,31 @@ print(response.text)
 
 api_endpoint = response.json()["api_endpoint"]
 ```
+```javascript javascript
+const request = require("request");
+
+const template_id = "9a5f0111-4e8b-428d-8fda-863773fe41cd";
+
+const url = "https://api.berri.ai/create_app";
+
+const data = {
+  template_id: template_id,
+  user_email: "krrish@berri.ai"
+};
+
+const files = {
+  data_source: fs.createReadStream("quizlet_wa_test_1.pdf")
+};
+
+const response = request.post({url:url, formData: {data, files}}, function(err, httpResponse, body) {
+  if (err) {
+    return console.error("upload failed:", err);
+  }
+  console.log("Upload successful!  Server responded with:", body);
+});
+
+const api_endpoint = JSON.parse(body)["api_endpoint"];
+```
 
 ```javascript node.js
 const request = require('request');
