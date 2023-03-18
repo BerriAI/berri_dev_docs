@@ -49,8 +49,8 @@
     {
       "group": "Tutorials",
       "pages": [
-        "api-reference/tutorials/website_embed",
-        "api-reference/tutorials/substack_tutorial"
+        "api-reference/tutorials/substack_tutorial",
+        "api-reference/tutorials/website_embed"
       ]
     },
     {
