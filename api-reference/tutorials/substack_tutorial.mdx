@@ -79,3 +79,67 @@ In the code above, you first define the template_id that you retrieved in the pr
 You then define the input_url, which is the Substack blog post that you want to generate the app for.
 You then send a request to BerriAI's create_app endpoint with the template_id, user_email, and data_source as the payload.
 You should specify your own email if you are a developer building with Berri
+
+
+## Step 3: Dynamic Instance Generation + Get off localhost - Create a Flask Server 
+Step 3 of the tutorial is to create a server that can dynamically generate GPT-4 instances for each subsequent blog post. 
+To achieve this, we can utilize the Berri API endpoint to generate these instances on the fly. 
+Here is the Flask app code for this purpose:
+
+```python
+from flask import Flask, request
+import requests
+
+app = Flask(__name__)
+
+template_id = "be22ee2e-2186-4406-b45c-53e69306c3c4"
+url = "https://api.berri.ai/create_app"
+
+
+@app.route('/')
+def hello():
+  return 'Hello from my Flask app!'
+
+
+@app.route('/create-app', methods=['POST'])
+def create_app():
+
+  input_url = request.form.get('input_url')
+  print(input_url)
+  data = {
+    "template_id": template_id,
+    "user_email": "ishaan@berri.ai",
+    "data_source": input_url
+  }
+  response = requests.post(url, data=data)
+  print(response.json())
+  api_endpoint = response.json()["api_endpoint"]
+  return response.json()
+
+
+if __name__ == "__main__":
+  from waitress import serve
+  serve(app, host="0.0.0.0", port=5000)
+
+
+```
+
+This app is built on the code from Step 2 and is converted into a Flask app. 
+We already have a template ID and are now dynamically seting the input URLs. 
+The Flask server listens for HTTP POST requests on the /create-app endpoint.
+When it receives a request, it extracts the input_url from the form data, and sends a POST request to the Berri API endpoint 
+with the appropriate template_id, user_email, and data_source parameters - the data source changes based on the substack blog post 
+The response JSON from the Berri API, which includes the api_endpoint and website_endpoint, is then returned to the caller of the /create-app endpoint.
+example response for this substack https://substack.com/inbox/post/109167394
+```
+{
+    "api_endpoint": "https://shareddbstorequery-7bea-8hjw.zeet-berri.zeet.app/berri_query?proj_path=indexes/ishaan@berri.ai/4bb13867-d3f1-40a9-b20a-4ef3f2f532a8&query=",
+    "website_endpoint": "chat.berri.ai/aHR0cHM6Ly9zaGFyZWRkYnN0b3JlcXVlcnktN2JlYS04aGp3LnplZXQtYmVycmkuemVldC5hcHAvYmVycmlfcXVlcnk_cHJval9wYXRoPWluZGV4ZXMvaXNoYWFuQGJlcnJpLmFpLzRiYjEzODY3LWQzZjEtNDBhOS1iMjBhLTRlZjNmMmY1MzJhOA=="
+}
+```
+
+That's it for this tutorial. Here are some future steps you could take to build upon what we've done:
+
+Make this a full-stack app by adding a frontend to call your Flask server. You can use tools like React or Vue to build the frontend. Here's a good starting point: https://replit.com/join/ceztxyemli-ishaan-jaff
+Customize the chat.berri.ai interface for your application by adding your own custom branding and keeping only the features you require.
+The chat.berri.ai is open-sourced on GitHub. You can check it out here: https://github.com/ClerkieAI/Berri-chat-fe.
