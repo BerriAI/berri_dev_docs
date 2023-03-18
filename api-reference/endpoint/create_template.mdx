@@ -56,9 +56,9 @@ import requests
 import json
 url = "https://api.berri.ai/create_template"
 
-data = {"app_config": {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"} }
+data = {"advanced": {"intent": "qa_doc", "search": "default"}, "prompt": "Be legal and ethical", "output_length": "256"}
 
-response = requests.post(url, data=json.dumps(data))
+response = requests.post(url, data={"app_config": json.dumps(data)})
 
 print(response.text)
 ```
