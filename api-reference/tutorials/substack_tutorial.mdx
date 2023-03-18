@@ -1,16 +1,21 @@
 ---
-title: "Creating Custom GPT-4 Apps for Substack Blog Posts with BerriAI"
-description: "This tutorial will guide you on how to use BerriAI to create custom GPT-4 apps for Substack blog posts in a few simple steps."
+title: "Creating Custom GPT-4 Instances for Substack Blog Posts with BerriAI"
+description: "This tutorial will guide you on how to use BerriAI to create custom GPT-4 Instances for Substack blog posts in a few simple steps."
 ---
 
-In this tutorial, you will learn how to use BerriAI to create custom GPT-4 apps for Substack blog posts by inputting a blog url
+In this tutorial, you will learn how to use BerriAI to create custom GPT-4 instances for 
+Substack blog posts by inputting a blog URL.
 
-## Step 1: Create a Template
-The first step is to create a template that specifies the structure of your GPT-4 app. You can create a template using the following code snippet:
+## Step 1: Create a Template to use the specified Prompt
+The first step is to create a template where you can configure your instances. 
+You can use your template to specify the prompt to use (eg You are a Pirate who will help with legal documents) and 
+if the instance will be used for doing question answering over documents, input URLs or 
+data analysis. 
+You can also use the same template for all the instances you create in step 2.
 
+You can specify the prompt and intent when creating the template. 
+In this tutorial, you will create a template using the following code snippet:
 
-
-This is the code you need: 
 ```python
 import requests
 import json
@@ -21,7 +26,9 @@ Context information is below.
 ---------------------
 {context_str}
 ---------------------
-You are an AI assistant for answering questions from substack blog posts, given the context information and no prior knowledge, generate the answer for {query_str}
+You are an AI assistant for answering questions from substack blog posts, 
+given the context information and no prior knowledge, 
+generate the answer for {query_str} by answering like Yoda
 """
 
 # store template id
@@ -41,16 +48,16 @@ template_id = response.json()["template_id"]
 
 ```
 
-In the code above, we first define the prompt for the template. 
-This is the text that the user will see when using the app. 
-We then send a request to BerriAI's create_template endpoint with the prompt as the payload. 
-The response will contain a JSON object with a template_id key, which we will store for later use.
+- In the code above, we first define the prompt for the template. 
+- We then send a request to BerriAI's create_template endpoint with the prompt as the payload. 
+- The response will contain a JSON object with a template_id key, which we will store for later use.
 
 
 ## Step 2: Create an Instance Using an Existing Template
-Next, we need to create an instance of the template we just created. 
-An instance is a specific implementation of a template. 
-In our case, we will create an instance of the GPT-4 app for a specific Substack blog post.
+Next, create an instance of the template you just created. 
+An instance is a custom GPT-4 app that is fine-tuned to the data source specified. 
+In this case, you will create an instance of the GPT-4 app for a 
+specific Substack blog post.
 
 ```python
 template_id = "6913bf12-9ec7-4255-8f4d-00e7207dd0b0"
@@ -68,6 +75,7 @@ print(response.text)
 api_endpoint = response.json()["api_endpoint"]
 
 ```
-In the code above, we first define the template_id that we retrieved in the previous step. We then define the input_url, which is the Substack blog post that we want to generate the app for.
-
-We then send a request to BerriAI's create_app endpoint with the template_id, user_email, and data_source as the payload. The user_email is the email address of the user
+In the code above, you first define the template_id that you retrieved in the previous step.
+You then define the input_url, which is the Substack blog post that you want to generate the app for.
+You then send a request to BerriAI's create_app endpoint with the template_id, user_email, and data_source as the payload.
+You should specify your own email if you are a developer building with Berri
