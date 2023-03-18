@@ -1,0 +1,73 @@
+---
+title: "Creating Custom GPT-4 Apps for Substack Blog Posts with BerriAI"
+description: "This tutorial will guide you on how to use BerriAI to create custom GPT-4 apps for Substack blog posts in a few simple steps."
+---
+
+In this tutorial, you will learn how to use BerriAI to create custom GPT-4 apps for Substack blog posts by inputting a blog url
+
+## Step 1: Create a Template
+The first step is to create a template that specifies the structure of your GPT-4 app. You can create a template using the following code snippet:
+
+
+
+This is the code you need: 
+```python
+import requests
+import json
+
+## create template
+prompt = """
+Context information is below.
+---------------------
+{context_str}
+---------------------
+You are an AI assistant for answering questions from substack blog posts, given the context information and no prior knowledge, generate the answer for {query_str}
+"""
+
+# store template id
+url = "https://api.berri.ai/create_template"
+data = {
+  "advanced": {
+    "intent": "qa_website",
+  },
+  "prompt": prompt
+}
+
+response = requests.post(url, data={"app_config": json.dumps(data)})
+
+print(response.text)
+
+template_id = response.json()["template_id"]
+
+```
+
+In the code above, we first define the prompt for the template. 
+This is the text that the user will see when using the app. 
+We then send a request to BerriAI's create_template endpoint with the prompt as the payload. 
+The response will contain a JSON object with a template_id key, which we will store for later use.
+
+
+## Step 2: Create an Instance Using an Existing Template
+Next, we need to create an instance of the template we just created. 
+An instance is a specific implementation of a template. 
+In our case, we will create an instance of the GPT-4 app for a specific Substack blog post.
+
+```python
+template_id = "6913bf12-9ec7-4255-8f4d-00e7207dd0b0"
+input_url = "https://janvikalra.substack.com/p/learning-1-i-know-nothing"
+
+## create instance using existing template id
+url = "https://api.berri.ai/create_app"
+data = {
+  "template_id": template_id,
+  "user_email": "ishaan@berri.ai",
+  "data_source": input_url
+}
+response = requests.post(url, data=data)
+print(response.text)
+api_endpoint = response.json()["api_endpoint"]
+
+```
+In the code above, we first define the template_id that we retrieved in the previous step. We then define the input_url, which is the Substack blog post that we want to generate the app for.
+
+We then send a request to BerriAI's create_app endpoint with the template_id, user_email, and data_source as the payload. The user_email is the email address of the user

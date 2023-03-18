@@ -48,7 +48,10 @@
     },
     {
       "group": "Tutorials",
-      "pages": ["api-reference/tutorials/website_embed"]
+      "pages": [
+        "api-reference/tutorials/website_embed",
+        "api-reference/tutorials/substack_tutorial"
+      ]
     },
     {
       "group": "App Configuration",
