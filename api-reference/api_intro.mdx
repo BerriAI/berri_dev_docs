@@ -3,23 +3,24 @@ title: "Getting Started"
 description: "Now it's your time to shine. Keep reading to learn more on how to make your docs beautiful and powerful."
 ---
 
-# Create your 1st Berri in just 2 steps!  
+# Create your 1st Berri in just 2 steps!
 
 👩🏽‍💻 Code: https://replit.com/join/ifraaoxeki-krrishdholakia
 
-🚀 Playground - [berri.ai/](https://berri.ai/). 
+🚀 Playground - [berri.ai/](https://berri.ai/).
 
 ## Step 1: Create an App
-Creating an app requires 2 things: 
-1. User email: so we can map the created app to your account 
+
+Creating an app requires 2 things:
+
+1. User email: so we can map the created app to your account
 2. Data source: This is either the file or url (website or api endpoint) you'd like to query.
 
-Note: For our quick start we won't go into it, but you also have the option of customizing your app (custom prompting, search strategies, etc.). Go to [App Configurations](../api-reference/app_configurations/app_configurations_intro) to learn more. 
+Note: For our quick start we won't go into it, but you also have the option of customizing your app (custom prompting, search strategies, etc.). Go to [App Configurations](../api-reference/app_configurations/app_configurations_intro) to learn more.
 
-For now, let's do it on a sample pdf. 
+For now, let's do it on a sample pdf.
 
-
-Ensure that you are reading the file and sending its contents. 
+Ensure that you are reading the file and sending its contents.
 This works for PDF, DOC, TXT, CSV, and PPTX files.
 
 <CodeGroup>
@@ -28,7 +29,6 @@ This works for PDF, DOC, TXT, CSV, and PPTX files.
 curl -X POST \
   https://api.berri.ai/create_app \
   -H 'Content-Type: multipart/form-data' \
-  -F template_id=9a5f0111-4e8b-428d-8fda-863773fe41cd \
   -F user_email=krrish@berri.ai \
   -F data_source=@/Users/krrishdholakia/Downloads/quizlet_wa_test_1.pdf
 ```
@@ -36,11 +36,9 @@ curl -X POST \
 ```python python
 import requests
 
-template_id = "9a5f0111-4e8b-428d-8fda-863773fe41cd"
-
 url = "https://api.berri.ai/create_app"
 
-data = {"template_id": template_id, "user_email": "krrish@berri.ai"}
+data = {"user_email": "krrish@berri.ai"}
 
 files = {'data_source': open('quizlet_wa_test_1.pdf', 'rb')}
 
@@ -50,53 +48,53 @@ print(response.text)
 
 api_endpoint = response.json()["api_endpoint"]
 ```
+
 ```javascript javascript
 const request = require("request");
-
-const template_id = "9a5f0111-4e8b-428d-8fda-863773fe41cd";
 
 const url = "https://api.berri.ai/create_app";
 
 const data = {
-  template_id: template_id,
-  user_email: "krrish@berri.ai"
+  user_email: "krrish@berri.ai",
 };
 
 const files = {
-  data_source: fs.createReadStream("quizlet_wa_test_1.pdf")
+  data_source: fs.createReadStream("quizlet_wa_test_1.pdf"),
 };
 
-const response = request.post({url:url, formData: {data, files}}, function(err, httpResponse, body) {
-  if (err) {
-    return console.error("upload failed:", err);
+const response = request.post(
+  { url: url, formData: { data, files } },
+  function (err, httpResponse, body) {
+    if (err) {
+      return console.error("upload failed:", err);
+    }
+    console.log("Upload successful!  Server responded with:", body);
   }
-  console.log("Upload successful!  Server responded with:", body);
-});
+);
 
 const api_endpoint = JSON.parse(body)["api_endpoint"];
 ```
 
 ```javascript node.js
-const request = require('request');
-const fs = require('fs');
+const request = require("request");
+const fs = require("fs");
 
 const options = {
-  method: 'POST',
-  url: 'https://api.berri.ai/create_app',
+  method: "POST",
+  url: "https://api.berri.ai/create_app",
   headers: {
-    'Content-Type': 'multipart/form-data'
+    "Content-Type": "multipart/form-data",
   },
   formData: {
-    template_id: '9a5f0111-4e8b-428d-8fda-863773fe41cd',
-    user_email: 'krrish@berri.ai',
+    user_email: "krrish@berri.ai",
     data_source: {
-      value: fs.createReadStream('quizlet_wa_test_1.pdf'),
+      value: fs.createReadStream("quizlet_wa_test_1.pdf"),
       options: {
-        filename: 'quizlet_wa_test_1.pdf',
-        contentType: 'application/pdf'
-      }
-    }
-  }
+        filename: "quizlet_wa_test_1.pdf",
+        contentType: "application/pdf",
+      },
+    },
+  },
 };
 
 request(options, function (error, response, body) {
@@ -105,15 +103,16 @@ request(options, function (error, response, body) {
   console.log(body);
 });
 ```
+
 </CodeGroup>
 
-## Step 2: Try your app! 
+## Step 2: Try your app!
 
-Congratulations, you've just built your first Berri app. 
+Congratulations, you've just built your first Berri app.
 
-You can share this app with your friends with the website_endpoint, or integrate this into your app with the api_endpoint! 
+You can share this app with your friends with the website_endpoint, or integrate this into your app with the api_endpoint!
 
-Here's an example of how you can query the api endpoint: 
+Here's an example of how you can query the api endpoint:
 
 ```python
 url = api_endpoint
