@@ -1,5 +1,5 @@
 ---
-title: "Creating Custom GPT-4 Instances for Substack Blog Posts with BerriAI"
+title: "Dynamically Creating Custom GPT-4 Instances for Substack Blog Posts with BerriAI"
 description: "This tutorial will guide you on how to use BerriAI to create custom GPT-4 Instances for Substack blog posts in a few simple steps."
 ---
 
@@ -123,14 +123,13 @@ if __name__ == "__main__":
 
 
 ```
-
-This app is built on the code from Step 2 and is converted into a Flask app. 
-We already have a template ID and are now dynamically seting the input URLs. 
-The Flask server listens for HTTP POST requests on the /create-app endpoint.
-When it receives a request, it extracts the input_url from the form data, and sends a POST request to the Berri API endpoint 
-with the appropriate template_id, user_email, and data_source parameters - the data source changes based on the substack blog post 
-The response JSON from the Berri API, which includes the api_endpoint and website_endpoint, is then returned to the caller of the /create-app endpoint.
-example response for this substack https://substack.com/inbox/post/109167394
+- This app uses code from Step 2 and is converted into a Flask app.
+- A template ID is already available and input URLs are dynamically set.
+- The Flask server listens for HTTP POST requests on the /create-app endpoint.
+- When it receives a request, it extracts the input URL from the form data.
+- The Flask app sends a POST request to the Berri API endpoint with appropriate parameters, including the template ID, user email, and input URL, which varies based on the substack blog post.
+- The response JSON from the Berri API includes the api_endpoint and website_endpoint, which is returned to the caller of the /create-app endpoint.
+- An example response for this substack https://substack.com/inbox/post/109167394
 ```
 {
     "api_endpoint": "https://shareddbstorequery-7bea-8hjw.zeet-berri.zeet.app/berri_query?proj_path=indexes/ishaan@berri.ai/4bb13867-d3f1-40a9-b20a-4ef3f2f532a8&query=",
@@ -138,8 +137,7 @@ example response for this substack https://substack.com/inbox/post/109167394
 }
 ```
 
-That's it for this tutorial. Here are some future steps you could take to build upon what we've done:
-
-Make this a full-stack app by adding a frontend to call your Flask server. You can use tools like React or Vue to build the frontend. Here's a good starting point: https://replit.com/join/ceztxyemli-ishaan-jaff
-Customize the chat.berri.ai interface for your application by adding your own custom branding and keeping only the features you require.
-The chat.berri.ai is open-sourced on GitHub. You can check it out here: https://github.com/ClerkieAI/Berri-chat-fe.
+Future steps:
+Make a full-stack app by adding a frontend to call your Flask server. Consider using React or Vue. Here's a starting point: https://replit.com/join/ceztxyemli-ishaan-jaff
+Customize the chat.berri.ai interface for your application. Add your own branding and keep the necessary features.
+Chat.berri.ai is open-sourced on GitHub. Check it out here: https://github.com/ClerkieAI/Berri-chat-fe.
