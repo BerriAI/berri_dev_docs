@@ -1,0 +1,77 @@
+---
+title: "Classification + Multi-prompting Tutorial"
+description: "This tutorial will guide you on how to use BerriAI to classify content as well as give it multiple examples to improve your answers."
+---
+
+```python
+import requests
+import json
+
+# Step 1: Create a template of your app config
+
+url = "https://api.berri.ai/create_template"
+
+instruction_prompt = """
+You are an AI assistant, helping an employee pick the correct presentation template for their task. If you are unsure, say 'Hmm, I'm not sure'. Do not make things up.
+
+Answer in the following format:
+Query: The query the user asked
+Template: The correct presentation template for their task.
+
+Here's a few examples of how you should answer:
+
+Query: Need to discuss employee compensation
+Template: compensation
+
+Query: Analyzing a new market before entering it
+Template: competitive_landscape
+
+Query: Show growth in the business over the last quarter
+Template: before_and_after
+
+Query:
+"""
+
+app_config = {
+  "advanced": {
+    "intent": "qa_doc",
+    "search": "summarize",
+    "app_type": "simple"
+  },
+  "prompt": instruction_prompt,
+}
+
+data = {"app_config": json.dumps(app_config)}
+
+response = requests.post(url, data=data)
+print(response.text)
+
+# Step 2: Create an app with your config + data source
+template_id = response.json()["template_id"]
+
+print(template_id)
+
+url = "https://api.berri.ai/create_app"
+
+data = {"template_id": template_id, "user_email": "krrish@berri.ai", "data_source": json.dumps(['hello', 'test', 'try'])}
+
+response = requests.post(url, data=data)
+
+print(response.text)
+
+api_endpoint = response.json()["api_endpoint"]
+
+print(api_endpoint)
+
+# Step 3: Querying your app
+api_endpoint = api_endpoint.split("&query")[0]
+api_endpoint, proj_path = api_endpoint.split("?proj_path=")
+querystring = {"proj_path": proj_path, "query": "who is ishaan",
+                "model": "gpt-3.5-turbo"}
+print(api_endpoint)
+response = requests.get(api_endpoint, params=querystring)
+
+print(response.text)
+
+
+```
