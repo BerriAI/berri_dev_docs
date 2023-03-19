@@ -9,10 +9,6 @@ Here's a link to a replit showing how to create an app: https://replit.com/join/
 
 ### Query
 
-<ParamField body="template_id" type="string" optional>
-  The app configuration you sent to /create_template is now stored as a template. This is it's unique id. Use it to automatically spin up chatGPT apps with that exact configuration. 
-</ParamField>
-
 <ParamField body="user_email" type="string">
   Pass in your email, this will map the app you create to your account.
 </ParamField>
@@ -21,8 +17,13 @@ Here's a link to a replit showing how to create an app: https://replit.com/join/
   Either a file (.pdf, .zip, .pptx, .docx, .txt) or a website/api url
 </ParamField>
 
+<ParamField body="template_id" type="string" optional>
+  The app configuration you sent to /create_template is now stored as a template. This is it's unique id. Use it to automatically spin up chatGPT apps with that exact configuration. 
+</ParamField>
+
 <ParamField body="prompt" type="string" optional>
   Optional - use this to help specify how you want your output to be.
+  This will override the prompt you set in your template if this field is set
   eg. You are an AI customer support bot for Substack blog posts 
 </ParamField>
 
