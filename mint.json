@@ -50,12 +50,17 @@
       "group": "Tutorials",
       "pages": [
         "api-reference/tutorials/substack_tutorial",
-        "api-reference/tutorials/website_embed"
+        "api-reference/tutorials/website_embed",
+        "api-reference/tutorials/classification_tutorial"
       ]
     },
     {
       "group": "App Configuration",
-      "pages": ["api-reference/app_configurations/app_configurations_intro", "api-reference/app_configurations/file_configuration", "api-reference/app_configurations/url_configuration"]
+      "pages": [
+        "api-reference/app_configurations/app_configurations_intro",
+        "api-reference/app_configurations/file_configuration",
+        "api-reference/app_configurations/url_configuration"
+      ]
     },
     {
       "group": "Additional Resources",
