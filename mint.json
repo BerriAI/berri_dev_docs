@@ -43,7 +43,8 @@
       "pages": [
         "api-reference/endpoint/create_template",
         "api-reference/endpoint/create_app",
-        "api-reference/endpoint/query"
+        "api-reference/endpoint/query",
+        "api-reference/endpoint/finetuning"
       ]
     },
     {

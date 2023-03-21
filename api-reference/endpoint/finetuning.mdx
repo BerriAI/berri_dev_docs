@@ -1,0 +1,40 @@
+---
+title: "FineTuning"
+api: "POST https://api.berri.ai//inetune_instance"
+contentType: "file"
+description: "Finetune your instance by providing it context and correct answer"
+---
+
+### Fine-tune
+This endpoint is used to finetune an instance by passing 
+in the required information as parameters in the request.
+
+Request Body
+The request body should contain a list of JSON objects, with each object containing both context and correct_response attributes. The structure of the request body should be as follows:
+
+<ParamField body="user_email" type="string">
+  Pass in your email, this will map the app you create to your account.
+</ParamField>
+
+<ParamField body="instance_id" type="string">
+  The instance_id you received after calling create_app
+</ParamField>
+
+<ParamField body="prompt" type="string" optional>
+  Optional - use this to help specify how you want your output to be. This will
+  override the prompt you set in your template if this field is set eg. You are
+  an AI customer support bot for Substack blog posts
+</ParamField>
+
+### Response
+
+<ResponseField name="api_endpoint" type="string">
+  This will return an api endpoint which you can use to query your app.
+</ResponseField>
+
+<ResponseField name="website_endpoint" type="string">
+  This will return a website endpoint which you can use for quick prototyping.
+</ResponseField>
+
+
+
