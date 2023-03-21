@@ -20,20 +20,35 @@ The request body should contain a list of JSON objects, with each object contain
   The instance_id you received after calling create_app
 </ParamField>
 
-<ParamField body="prompt" type="string" optional>
-  Optional - use this to help specify how you want your output to be. This will
-  override the prompt you set in your template if this field is set eg. You are
-  an AI customer support bot for Substack blog posts
+<ParamField body="" type="string" default="[]" required>
+  The request body should contain a list of JSON objects, with each object containing both context 
+  and correct_response attributes. The structure of the request body should be as follows:
+
+  ```
+    [  
+        {    
+            "context": "In what year did Neil Armstrong land on the moon?",    
+            "correct_response": "1969"  
+        }, 
+        {    "context": "Who is the author of the book 'To Kill a Mockingbird'?",
+            "correct_response": "Harper Lee"  
+        },  
+        {    "context": "What is the capital of France?",    
+            "correct_response": "Paris"  
+        }
+    ]
+  ```
 </ParamField>
 
 ### Response
 
-<ResponseField name="api_endpoint" type="string">
-  This will return an api endpoint which you can use to query your app.
+<ResponseField name="status" type="string">
+  A string indicating the status of the request. 
+  This will be "success" if the request was successful and the feedback was stored
 </ResponseField>
 
-<ResponseField name="website_endpoint" type="string">
-  This will return a website endpoint which you can use for quick prototyping.
+<ResponseField name="api_endpoint" type="string">
+  Your api endpoint of the finetuned instance
 </ResponseField>
 
 
