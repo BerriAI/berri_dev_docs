@@ -65,6 +65,10 @@
     {
       "group": "Additional Resources",
       "pages": ["api-reference/resources/gallery"]
+    },
+    {
+      "group": "Support & FAQs",
+      "pages": ["api-reference/faqs-support/faqs"]
     }
   ],
   "footerSocials": {
