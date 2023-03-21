@@ -27,7 +27,7 @@ querystring = {"proj_path": "indexes/ishaan@berri.ai/6663d98e-f3e2-42b9-a79e-2d9
                 "query": "who is ishaan",
                 "model": "gpt-3.5-turbo"}
 
-response = requests.post(url, params=querystring)
+response = requests.get(url, params=querystring)
 
 print(response.text)
 ```
