@@ -1,6 +1,6 @@
 ---
 title: "FineTuning"
-api: "POST https://api.berri.ai//inetune_instance"
+api: "POST https://api.berri.ai/finetune_instance"
 contentType: "file"
 description: "Finetune your instance by providing it context and correct answer"
 ---
@@ -20,7 +20,7 @@ The request body should contain a list of JSON objects, with each object contain
   The instance_id you received after calling create_app
 </ParamField>
 
-<ParamField body="" type="string" default="[]" required>
+<ParamField body="data" type="string" default="[]" required>
   The request body should contain a list of JSON objects, with each object containing both context 
   and correct_response attributes. The structure of the request body should be as follows:
 
