@@ -5,7 +5,7 @@ contentType: "file"
 description: "Connect to a single or multiple data sources and spin up chatGPT apps for each of them"
 ---
 
-Here's a link to a replit showing how to create an app: https://replit.com/join/ifraaoxeki-krrishdholakia
+Here's a link to a replit showing how to create an app: https://replit.com/@krrishdholakia/BerriAPIQuizlet?v=1
 
 ### Query
 
@@ -18,13 +18,15 @@ Here's a link to a replit showing how to create an app: https://replit.com/join/
 </ParamField>
 
 <ParamField body="template_id" type="string" optional>
-  The app configuration you sent to /create_template is now stored as a template. This is it's unique id. Use it to automatically spin up chatGPT apps with that exact configuration. 
+  The app configuration you sent to /create_template is now stored as a
+  template. This is it's unique id. Use it to automatically spin up chatGPT apps
+  with that exact configuration.
 </ParamField>
 
 <ParamField body="prompt" type="string" optional>
-  Optional - use this to help specify how you want your output to be.
-  This will override the prompt you set in your template if this field is set
-  eg. You are an AI customer support bot for Substack blog posts 
+  Optional - use this to help specify how you want your output to be. This will
+  override the prompt you set in your template if this field is set eg. You are
+  an AI customer support bot for Substack blog posts
 </ParamField>
 
 ### Response
@@ -34,7 +36,7 @@ Here's a link to a replit showing how to create an app: https://replit.com/join/
 </ResponseField>
 
 <ResponseField name="website_endpoint" type="string">
-  This will return a website endpoint which you can use for quick prototyping.  
+  This will return a website endpoint which you can use for quick prototyping.
 </ResponseField>
 
 <RequestExample>
@@ -65,6 +67,7 @@ print(response.text)
 
 api_endpoint = response.json()["api_endpoint"]
 ```
+
 ```javascript javascript
 const request = require("request");
 
@@ -74,44 +77,47 @@ const url = "https://api.berri.ai/create_app";
 
 const data = {
   template_id: template_id,
-  user_email: "krrish@berri.ai"
+  user_email: "krrish@berri.ai",
 };
 
 const files = {
-  data_source: fs.createReadStream("quizlet_wa_test_1.pdf")
+  data_source: fs.createReadStream("quizlet_wa_test_1.pdf"),
 };
 
-const response = request.post({url:url, formData: {data, files}}, function(err, httpResponse, body) {
-  if (err) {
-    return console.error("upload failed:", err);
+const response = request.post(
+  { url: url, formData: { data, files } },
+  function (err, httpResponse, body) {
+    if (err) {
+      return console.error("upload failed:", err);
+    }
+    console.log("Upload successful!  Server responded with:", body);
   }
-  console.log("Upload successful!  Server responded with:", body);
-});
+);
 
 const api_endpoint = JSON.parse(body)["api_endpoint"];
 ```
 
 ```javascript node.js
-const request = require('request');
-const fs = require('fs');
+const request = require("request");
+const fs = require("fs");
 
 const options = {
-  method: 'POST',
-  url: 'https://api.berri.ai/create_app',
+  method: "POST",
+  url: "https://api.berri.ai/create_app",
   headers: {
-    'Content-Type': 'multipart/form-data'
+    "Content-Type": "multipart/form-data",
   },
   formData: {
-    template_id: '9a5f0111-4e8b-428d-8fda-863773fe41cd',
-    user_email: 'krrish@berri.ai',
+    template_id: "9a5f0111-4e8b-428d-8fda-863773fe41cd",
+    user_email: "krrish@berri.ai",
     data_source: {
-      value: fs.createReadStream('quizlet_wa_test_1.pdf'),
+      value: fs.createReadStream("quizlet_wa_test_1.pdf"),
       options: {
-        filename: 'quizlet_wa_test_1.pdf',
-        contentType: 'application/pdf'
-      }
-    }
-  }
+        filename: "quizlet_wa_test_1.pdf",
+        contentType: "application/pdf",
+      },
+    },
+  },
 };
 
 request(options, function (error, response, body) {
@@ -120,4 +126,5 @@ request(options, function (error, response, body) {
   console.log(body);
 });
 ```
+
 </RequestExample>
