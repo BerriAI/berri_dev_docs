@@ -1,15 +1,25 @@
 ---
 title: "Query your BerriAI APP"
-api: "GET https://shareddbstorequery-7bea-8hjw.zeet-berri.zeet.app/berri_query"
+api: "GET https://api.berri.ai/query"
 description: "How to query your Berri Endpoint"
 ---
 
 ### Query
-<ParamField query="proj_path" type="string">
-   This is project id for your Berri App. It's provided in the response after creating your app
-   Example: indexes/ishaan@berri.ai/6663d98e-f3e2-42b9-a79e-2d92199b85fa
+model (optional): The name of the GPT model to use. Default is gpt-3.5-turbo.
+query (required): The prompt to generate text from.
+user_email (required): The email address of the user making the request.
+instance_id (required): The unique ID of the instance making the request.
+<ParamField query="user_email" type="string">
+   The email address you are using on your berri.ai account
+   Example: ishaan@berri.ai
 </ParamField>
-
+<ParamField query="instance_id" type="string">
+   The instance you want to query, create_app returns an instance_id that you can query here
+</ParamField>
+<ParamField query="query" type="string">
+   The query for your instance
+   Example: "Who is ishaan?"
+</ParamField>
 <ParamField query="model" type="string" optional>
   There are currently 2 types of models Berri supports
   Default: Uses text-davinci-003
@@ -21,11 +31,14 @@ description: "How to query your Berri Endpoint"
 ```python python
 import requests
 
-url = "https://shareddbstorequery-7bea-8hjw.zeet-berri.zeet.app/berri_query"
+url = "https://api.berri.ai/query"
 
-querystring = {"proj_path": "indexes/ishaan@berri.ai/6663d98e-f3e2-42b9-a79e-2d92199b85fa",
+querystring = {
+                "user_email": "ishaan@berri.ai",
+                "instance_id": "6663d98e-f3e2-42b9-a79e-2d92199b85fa",
                 "query": "who is ishaan",
-                "model": "gpt-3.5-turbo"}
+                "model": "gpt-3.5-turbo"
+              }
 
 response = requests.get(url, params=querystring)
 
