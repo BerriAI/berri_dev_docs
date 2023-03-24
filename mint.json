@@ -65,7 +65,11 @@
     },
     {
       "group": "Additional Resources",
-      "pages": ["api-reference/resources/gallery"]
+      "pages": [
+        "api-reference/resources/gallery",
+        "api-reference/resources/roadmap"
+
+      ]
     },
     {
       "group": "Support & FAQs",
