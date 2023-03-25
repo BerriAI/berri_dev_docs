@@ -29,6 +29,18 @@ Here's a link to a replit showing how to create an app: https://replit.com/@krri
   an AI customer support bot for Substack blog posts
 </ParamField>
 
+<ParamField body="plugin_name" type="string" optional>
+  OpenAI Plugin Parameter
+  Use this Parameter to set the name for your plugin
+  ex. resume knowledge
+</ParamField>
+
+<ParamField body="plugin_description" type="string" optional>
+  OpenAI Plugin Parameter
+  Use this Parameter to set a model description for your plugin
+  ex. Plugin for querying data about Ishaan's resume
+</ParamField>
+
 ### Response
 
 <ResponseField name="api_endpoint" type="string">
@@ -41,6 +53,17 @@ Here's a link to a replit showing how to create an app: https://replit.com/@krri
 
 <ResponseField name="instance_id" type="string">
   This will return the instance_id, which you can specify when calling api.berri.ai/query
+</ResponseField>
+
+
+<ResponseField name="plugin_yaml" type="string">
+  OpenAI Plugin Field: This is the auto created openapi.yaml file for your berri
+  More info here: https://platform.openai.com/docs/plugins/examples
+</ResponseField>
+
+<ResponseField name="plugin_manifest" type="string">
+  OpenAI Plugin Field: This is the auto created ai-plugin.json file for your berri
+  More info here: https://platform.openai.com/docs/plugins/examples
 </ResponseField>
 
 
