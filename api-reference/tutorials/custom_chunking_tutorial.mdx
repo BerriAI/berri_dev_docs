@@ -1,0 +1,64 @@
+---
+title: "Document QA w/ Custom Chunking Tutorial"
+description: "This tutorial will guide you on how to use your own customized chunking strategy and pass those chunks to BerriAI."
+---
+
+Let's say we want to QA a [research paper](https://drive.google.com/file/d/1g-RBkhExWOsNJ17IBOQmv-4owaV5nH1X/view?usp=share_link).
+
+Since we can't fit the entire paper into GPT, we need a way to break this paper down into smaller chunks. By default Berri provides custom chunking, but we can also write our own.
+
+Writing your own chunking strategy is a good way of improving the quality of our responses (since we're answering user questions based on the most relevant chunk we find).
+
+# Step 1: Set up your environment
+
+For this tutorial we're going to use a [sample ML research paper](https://drive.google.com/file/d/1g-RBkhExWOsNJ17IBOQmv-4owaV5nH1X/view?usp=share_link) as our initial data source.
+
+```python
+!pip install gdown
+!gdown 1g-RBkhExWOsNJ17IBOQmv-4owaV5nH1X
+!pip install PyPDF2
+import json
+import requests
+```
+
+# Step 2: Customize chunking
+
+In this case, let's make every page a chunk (i.e. the thing we feed into GPT).
+
+```python
+import PyPDF2
+text_list = []
+with open("./ml_paper.pdf", "rb") as fp:
+    # Create a PDF object
+    pdf = PyPDF2.PdfReader(fp)
+
+    # Get the number of pages in the PDF document
+    num_pages = len(pdf.pages)
+
+    # Iterate over every page
+    for page in range(num_pages):
+        # Extract the text from the page
+        page_text = pdf.pages[page].extract_text()
+        text_list.append(page_text) # chunk by page
+```
+
+Here we're using our own data loader (PyPDF2), extracting the text from the page, and adding that to `text_list`.
+
+# Step 3: Creating a custom chatGPT instance to QA against our Doc
+
+Since we've stored our chunks as a list (`text_list`), let's pass that to Berri.
+
+```python
+url = "https://api.berri.ai/create_app"
+data = {"user_email": <your_email>, "data_source": json.dumps(text_list)}
+response = requests.post(url, data=data)
+response.text
+```
+
+# Step 4: Testing our instance in playground
+
+Each instance has it's own unique playground link. This is a place for you to test your model and quickly make any changes (e.g. updating prompt, etc.)
+
+```python
+playground_endpoint = response.json()["playground_endpoint"]
+```
