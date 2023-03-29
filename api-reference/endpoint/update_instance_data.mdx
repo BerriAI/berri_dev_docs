@@ -1,0 +1,67 @@
+---
+title: "Update your Instance Data"
+api: "POST https://api.berri.ai/update_instance_data"
+description: "Add Text Data to your Berri Instance"
+---
+
+### Query
+
+<ParamField query="user_email" type="string">
+  The email address you are using on your berri.ai account Example:
+  ishaan@berri.ai
+</ParamField>
+<ParamField query="instance_id" type="string">
+  The instance you want to query, create_app returns an instance_id that you can
+  query here
+</ParamField>
+
+<ParamField body="data" type="string" default="[]" required>
+
+</ParamField>
+
+### Response
+
+<ResponseField name="message" type="string">
+    Returns Instance fdb3165d-77ad-4e9b-9ee6-25a5a4d41cfd deleted successfully, for ishaan@berri.ai on success
+    Returns Information about failure on errors
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Returns success on successful deletion
+</ResponseField>
+
+<RequestExample>
+
+```python python
+import requests
+
+url = "https://api.berri.ai/delete_instance"
+
+params = {
+  "user_email": "ishaan@berri.ai",
+  "instance_id": "762eaeeb-d854-4d85-a1a2-8d0a0a4940a6"
+}
+
+response = requests.post(url, params=params)
+
+print(response.text)
+
+```
+
+```javascript javascript
+const axios = require('axios');
+
+const url = "https://api.berri.ai/delete_instance";
+
+const params = {
+  "user_email": "ishaan@berri.ai",
+  "instance_id": "762eaeeb-d854-4d85-a1a2-8d0a0a4940a6"
+};
+
+axios.post(url, { params })
+  .then(response => console.log(response.data))
+  .catch(error => console.log(error));
+
+```
+
+</RequestExample>
