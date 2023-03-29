@@ -6,28 +6,31 @@ description: "Add Text Data to your Berri Instance"
 
 ### Query
 
-<ParamField query="user_email" type="string">
+<ParamField query="user_email" type="string" required>
   The email address you are using on your berri.ai account Example:
   ishaan@berri.ai
 </ParamField>
-<ParamField query="instance_id" type="string">
-  The instance you want to query, create_app returns an instance_id that you can
-  query here
+
+<ParamField query="instance_id" type="string" required>
+  The instance you want to add data to, create_app returns an instance_id that you should use here
 </ParamField>
 
-<ParamField body="data" type="string" default="[]" required>
-
+<ParamField body="data" type="string" required>
+    The text data you want to add to your instance
+    Example
+    ```
+    data = 'We moved to Bankless.com How stablecoin interest rates will rise and fall in the DeFi economy and why it matters Ryan Sean Adams Feb 13, 2020 Level up your open finance game three times a week. Subscribe to the Bankless program below.'
+    ```
 </ParamField>
 
 ### Response
 
 <ResponseField name="message" type="string">
-    Returns Instance fdb3165d-77ad-4e9b-9ee6-25a5a4d41cfd deleted successfully, for ishaan@berri.ai on success
-    Returns Information about failure on errors
+    returns Data updated successfully on successful upload
 </ResponseField>
 
 <ResponseField name="status" type="string">
-  Returns success on successful deletion
+  Returns success on successful update 
 </ResponseField>
 
 <RequestExample>
