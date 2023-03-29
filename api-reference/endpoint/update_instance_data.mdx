@@ -38,14 +38,29 @@ description: "Add Text Data to your Berri Instance"
 ```python python
 import requests
 
-url = "https://api.berri.ai/delete_instance"
+url = "https://api.berri.ai/update_instance_data"
+
+new_data="""
+We moved to Bankless.com
+Upgrade to paid
+Rise of the Cryptodollar
+How stablecoin interest rates will rise and fall in the DeFi economy and why it matters
+Ryan Sean Adams
+Feb 13, 2020
+Level up your open finance game three times a week. Subscribe to the Bankless program below.
+Upgrade to paid
+Dear Crypto Natives,
+You can get a Dai savings account at 7.5% interest—but will this rate go up or down?
+For those who prefer bank stablecoins you can get USDC at 
+"""
 
 params = {
   "user_email": "ishaan@berri.ai",
-  "instance_id": "762eaeeb-d854-4d85-a1a2-8d0a0a4940a6"
+  "instance_id": "87d22c9d-72c9-4f3f-b61c-6a07bae0ca99"
 }
 
-response = requests.post(url, params=params)
+
+response = requests.post(url, params=params, data={'data': new_data})
 
 print(response.text)
 
@@ -54,16 +69,34 @@ print(response.text)
 ```javascript javascript
 const axios = require('axios');
 
-const url = "https://api.berri.ai/delete_instance";
+const url = "https://api.berri.ai/update_instance_data";
+
+const new_data=`
+We moved to Bankless.com
+Upgrade to paid
+Rise of the Cryptodollar
+How stablecoin interest rates will rise and fall in the DeFi economy and why it matters
+Ryan Sean Adams
+Feb 13, 2020
+Level up your open finance game three times a week. Subscribe to the Bankless program below.
+Upgrade to paid
+Dear Crypto Natives,
+You can get a Dai savings account at 7.5% interest—but will this rate go up or down?
+For those who prefer bank stablecoins you can get USDC at
+`;
 
 const params = {
   "user_email": "ishaan@berri.ai",
-  "instance_id": "762eaeeb-d854-4d85-a1a2-8d0a0a4940a6"
+  "instance_id": "87d22c9d-72c9-4f3f-b61c-6a07bae0ca99"
 };
 
-axios.post(url, { params })
-  .then(response => console.log(response.data))
-  .catch(error => console.log(error));
+axios.post(url, { data: new_data }, { params })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 ```
 
