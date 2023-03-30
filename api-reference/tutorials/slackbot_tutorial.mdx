@@ -1,0 +1,116 @@
+---
+title: "How to Build a Custom Slackbot to Store Mappings of Channel IDs/Berri API Endpoints and then Call the Berri API Endpoints"
+description: " In this tutorial, we will go over how to build a custom Slackbot that can store mappings of channel IDs and API endpoints, and then call those API endpoints when requested."
+---
+
+## Skip right to the code
+TLDR: Want to jump right into the code, checkout the code here: https://berriSlackDemo.ishaan-jaff.repl.co
+
+## Prerequisites
+A Slack account
+A Slack app with Bot Token Scopes and User Token Scopes set up
+
+
+Step 1. Import the necessary libraries:
+```python
+import logging
+import os
+from slack_bolt import App
+from slack_bolt.oauth.oauth_settings import OAuthSettings
+from slack_sdk.oauth.installation_store import FileInstallationStore
+from slack_sdk.oauth.state_store import FileOAuthStateStore
+from slack_bolt.adapter.flask import SlackRequestHandler
+from slack_bolt.oauth import OAuthFlow
+from slack_sdk import WebClient
+import json
+import requests
+import uuid
+```
+
+
+Step 2. Create the OAuth settings object with your client ID, client secret, and desired scopes. You'll also need to specify the installation and state store directories, as well as the redirect URI for the OAuth flow.
+less
+
+```python
+oauth_settings = OAuthSettings(
+  client_id="YOUR_CLIENT_ID",
+  client_secret="YOUR_CLIENT_SECRET",
+  scopes=[
+    "chat:write", "app_mentions:read", "channels:join", "im:write",
+    "im:history", "chat:write.public", "commands", "mpim:write"
+  ],
+  installation_store=FileInstallationStore(base_dir="./data/installations"),
+  state_store=FileOAuthStateStore(expiration_seconds=600,
+                                  base_dir="./data/states"),
+  redirect_uri="YOUR_REDIRECT_URI"
+)
+```
+
+
+Create the Slack Bolt app object with your signing secret and OAuth settings object.
+```python
+app = App(signing_secret="YOUR_SIGNING_SECRET",
+          oauth_settings=oauth_settings)
+
+logging.basicConfig(level=logging.DEBUG)
+```
+
+
+Create a WebClient object with your bot token. This will be used to send messages later.
+```python
+client = WebClient(token="YOUR_BOT_TOKEN")
+```
+
+Define any event handlers that you want to use with your app. In this case, there are two event handlers: one for message events and one for app_mention events.
+This code responds with a "Hi from your Slackbot!" message and calls the API endpoint at https://jsonplaceholder.typicode.com/todos/1. It retrieves the title field from the API response and sends it back as a message to the channel.
+
+```python
+@app.event("message")
+def handle_message():
+  pass
+
+@app.event("app_mention")
+def handle_mention(event, say):
+    print("got message from app")
+    thread_ts = event['thread_ts'] if 'thread_ts' in event else event['ts']
+    message_text = event["text"]
+    print(event)
+    channel_id = event["channel"]
+    thread_ts = event["ts"]
+    say("Hi from your Slackbot!")
+    response = requests.get("https://jsonplaceholder.typicode.com/todos/1")
+    if response.status_code == 200:
+        response = response.json()['title']
+        print(response)
+    else:
+        print(f"Request failed with status code {response.status_code}")
+    say(text=response, thread_ts=thread_ts)
+```
+
+
+Create a Flask app and a Slack request handler for your app.
+```python
+flask_app = Flask(__name__)
+handler = SlackRequestHandler(app)
+```
+
+Define a route for Slack events and use the request handler to handle requests.
+```python
+@flask_app.route("/slack/events", methods=["POST"])
+def slack_events():
+  return handler.handle(request)
+
+
+@flask_app.route("/slack/install", methods=["GET"])
+def install():
+  print(request.args)
+  return handler.handle(request)
+
+
+@flask_app.route("/slack/oauth_redirect", methods=["GET"])
+def oauth_redirect():
+  print("in flask oauth handler")
+  print(request.args)
+  return handler.handle(request)
+
+```

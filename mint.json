@@ -55,7 +55,8 @@
         "api-reference/tutorials/substack_tutorial",
         "api-reference/tutorials/website_embed",
         "api-reference/tutorials/classification_tutorial",
-        "api-reference/tutorials/custom_chunking_tutorial"
+        "api-reference/tutorials/custom_chunking_tutorial",
+        "api-reference/tutorials/slackbot_tutorial"
       ]
     },
     {
