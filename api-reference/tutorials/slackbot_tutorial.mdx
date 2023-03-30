@@ -1,17 +1,17 @@
 ---
-title: "How to Build a Custom Slackbot to Store Mappings of Channel IDs/Berri API Endpoints and then Call the Berri API Endpoints"
-description: " In this tutorial, we will go over how to build a custom Slackbot that can store mappings of channel IDs and API endpoints, and then call those API endpoints when requested."
+title: "Build a slackbot to call your chatGPT / API endpoints"
+description: "In this tutorial, we will go over how to build a custom Slackbot that can store mappings of channel IDs and API endpoints, and then call those API endpoints when requested."
 ---
 
 ## Skip right to the code
-TLDR: Want to jump right into the code, checkout the code here: https://berriSlackDemo.ishaan-jaff.repl.co
+TLDR: Want to jump right into the code, checkout the code here: https://replit.com/join/kjfwuwqdet-ishaan-jaff
 
 ## Prerequisites
 A Slack account
 A Slack app with Bot Token Scopes and User Token Scopes set up
 
 
-Step 1. Import the necessary libraries:
+## Step 1. Import the necessary libraries:
 ```python
 import logging
 import os
@@ -28,8 +28,7 @@ import uuid
 ```
 
 
-Step 2. Create the OAuth settings object with your client ID, client secret, and desired scopes. You'll also need to specify the installation and state store directories, as well as the redirect URI for the OAuth flow.
-less
+## Step 2. Create the OAuth settings object with your client ID, client secret, and desired scopes. You'll also need to specify the installation and state store directories, as well as the redirect URI for the OAuth flow.
 
 ```python
 oauth_settings = OAuthSettings(
@@ -47,7 +46,7 @@ oauth_settings = OAuthSettings(
 ```
 
 
-Create the Slack Bolt app object with your signing secret and OAuth settings object.
+## Step 3. Create the Slack Bolt app object with your signing secret and OAuth settings object.
 ```python
 app = App(signing_secret="YOUR_SIGNING_SECRET",
           oauth_settings=oauth_settings)
@@ -56,12 +55,12 @@ logging.basicConfig(level=logging.DEBUG)
 ```
 
 
-Create a WebClient object with your bot token. This will be used to send messages later.
+## Step 4. Create a WebClient object with your bot token. This will be used to send messages later.
 ```python
 client = WebClient(token="YOUR_BOT_TOKEN")
 ```
 
-Define any event handlers that you want to use with your app. In this case, there are two event handlers: one for message events and one for app_mention events.
+## Step 5. Define any event handlers that you want to use with your app. In this case, there are two event handlers: one for message events and one for app_mention events.
 This code responds with a "Hi from your Slackbot!" message and calls the API endpoint at https://jsonplaceholder.typicode.com/todos/1. It retrieves the title field from the API response and sends it back as a message to the channel.
 
 ```python
@@ -88,13 +87,13 @@ def handle_mention(event, say):
 ```
 
 
-Create a Flask app and a Slack request handler for your app.
+## Step 6. Create a Flask app and a Slack request handler for your app.
 ```python
 flask_app = Flask(__name__)
 handler = SlackRequestHandler(app)
 ```
 
-Define a route for Slack events and use the request handler to handle requests.
+## Step 7. Define a route for Slack events and use the request handler to handle requests.
 ```python
 @flask_app.route("/slack/events", methods=["POST"])
 def slack_events():
@@ -114,3 +113,7 @@ def oauth_redirect():
   return handler.handle(request)
 
 ```
+
+## Step 8. Enjoy :) 
+Link to a demo slack bot we built at Berri:
+https://replit.com/join/kjfwuwqdet-ishaan-jaff
