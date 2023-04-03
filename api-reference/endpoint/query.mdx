@@ -1,5 +1,5 @@
 ---
-title: "Query your BerriAI APP"
+title: "Query App"
 api: "GET https://api.berri.ai/query"
 description: "How to query your Berri Endpoint"
 ---
@@ -21,6 +21,19 @@ description: "How to query your Berri Endpoint"
   There are currently 2 types of models Berri supports Default: Uses
   text-davinci-003 1. **gpt-3.5-turbo**: Uses chatGPT turbo api 2.
   **text-davinci-003**: uses the GPT-3 model
+</ParamField>
+<ParamField query="history" type="string" optional>
+  You can also choose to pass in the chat history as part of your query request. We expect this to be a list that is converted to a JSON String.
+
+**How is this being parsed by our API?**
+Our server is a Flask app, and we check if history exists, and if it does we try and evaluate if the JSON string passed is a list.
+
+`history = request.args.get('history')`
+`history = ast.literal_eval(history)`
+
+**How does this impact your query?**
+When you pass in history, we summarize it and pass it as additional context (in addition to your query) to the model you selected.
+
 </ParamField>
 
 <RequestExample>
