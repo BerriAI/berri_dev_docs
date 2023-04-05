@@ -76,7 +76,10 @@
     },
     {
       "group": "Support & FAQs",
-      "pages": ["api-reference/faqs-support/faqs"]
+      "pages": [
+        "api-reference/faqs-support/faqs",
+        "api-reference/faqs-support/data"
+      ]
     }
   ],
   "footerSocials": {
