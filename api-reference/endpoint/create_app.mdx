@@ -30,15 +30,13 @@ Here's a link to a replit showing how to create an app: https://replit.com/@krri
 </ParamField>
 
 <ParamField body="plugin_name" type="string" optional>
-  OpenAI Plugin Parameter
-  Use this Parameter to set the name for your plugin
-  ex. resume knowledge
+  OpenAI Plugin Parameter Use this Parameter to set the name for your plugin ex.
+  resume knowledge
 </ParamField>
 
 <ParamField body="plugin_description" type="string" optional>
-  OpenAI Plugin Parameter
-  Use this Parameter to set a model description for your plugin
-  ex. Plugin for querying data about Ishaan's resume
+  OpenAI Plugin Parameter Use this Parameter to set a model description for your
+  plugin ex. Plugin for querying data about Ishaan's resume
 </ParamField>
 
 ### Response
@@ -52,9 +50,9 @@ Here's a link to a replit showing how to create an app: https://replit.com/@krri
 </ResponseField>
 
 <ResponseField name="instance_id" type="string">
-  This will return the instance_id, which you can specify when calling api.berri.ai/query
+  This will return the instance_id, which you can specify when calling
+  api.berri.ai/query
 </ResponseField>
-
 
 <ResponseField name="plugin_yaml" type="string">
   OpenAI Plugin Field: This is the auto created openapi.yaml file for your berri
@@ -62,10 +60,9 @@ Here's a link to a replit showing how to create an app: https://replit.com/@krri
 </ResponseField>
 
 <ResponseField name="plugin_manifest" type="string">
-  OpenAI Plugin Field: This is the auto created ai-plugin.json file for your berri
-  More info here: https://platform.openai.com/docs/plugins/examples
+  OpenAI Plugin Field: This is the auto created ai-plugin.json file for your
+  berri More info here: https://platform.openai.com/docs/plugins/examples
 </ResponseField>
-
 
 <RequestExample>
 
@@ -153,6 +150,41 @@ request(options, function (error, response, body) {
 
   console.log(body);
 });
+```
+
+```javascript next.js
+var formdata = new FormData();
+formdata.append("data_source", props.fileContent);
+formdata.append("user_email", props.email);
+formdata.append("template_id", "12fc2341-a89d-4726-bc43-e5cbf634de32");
+console.log(formdata);
+var requestOptions = {
+  method: "POST",
+  body: formdata,
+  redirect: "follow",
+};
+fetch(create_instance_endpoint, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log("Create app result");
+    console.log(result);
+    console.log(result["website_endpoint"]);
+
+    result = "https://" + result["website_endpoint"];
+    console.log(result);
+    setIsLoading(false);
+    if (result["website_endpoint"] == "Failed request") {
+      setIsError(true);
+    } else {
+      setResult(result);
+    }
+  })
+  .catch((error) => {
+    setIsLoading(false);
+    console.log("error", error);
+    // console.log('fileContent name', props.fileContent.name);
+    setIsError(true);
+  });
 ```
 
 </RequestExample>
