@@ -169,21 +169,9 @@ fetch(create_instance_endpoint, requestOptions)
     console.log("Create app result");
     console.log(result);
     console.log(result["website_endpoint"]);
-
-    result = "https://" + result["website_endpoint"];
-    console.log(result);
-    setIsLoading(false);
-    if (result["website_endpoint"] == "Failed request") {
-      setIsError(true);
-    } else {
-      setResult(result);
-    }
   })
   .catch((error) => {
-    setIsLoading(false);
     console.log("error", error);
-    // console.log('fileContent name', props.fileContent.name);
-    setIsError(true);
   });
 ```
 
