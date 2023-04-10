@@ -14,7 +14,24 @@ Here's a link to a replit showing how to create an app: https://replit.com/@krri
 </ParamField>
 
 <ParamField body="data_source" type="string">
-  Either a file (.pdf, .zip, .pptx, .docx, .txt) or a website/api url
+  You can either send a **single datasource**: a single file (.pdf, .zip, .pptx, .docx, .txt) or a website/api url.
+
+````url = "https://api.berri.ai/create_app"
+
+data = {"template_id": template_id, "user_email": "krrish@berri.ai"}
+
+files = {'data_source': open('quizlet_wa_test_1.pdf', 'rb')}
+
+response = requests.post(url, files=files, data=data)```
+
+  Or **multiple data sources**: a list of strings or website urls.
+
+  ```tmp_list = ["hello world", "https://stripe.com/docs/india-accept-international-payments#TransactionPurposeCode"]
+
+  url = "https://api.berri.ai/create_app"
+  data = {"user_email": "krrish@berri.ai", "data_source": json.dumps(tmp_list)}
+  response = requests.post(url, data=data)
+  response.text```
 </ParamField>
 
 <ParamField body="template_id" type="string" optional>
@@ -73,7 +90,7 @@ curl -X POST \
   -F template_id=9a5f0111-4e8b-428d-8fda-863773fe41cd \
   -F user_email=krrish@berri.ai \
   -F data_source=@/Users/krrishdholakia/Downloads/quizlet_wa_test_1.pdf
-```
+````
 
 ```python python
 import requests
