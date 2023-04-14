@@ -1,0 +1,30 @@
+---
+title: "[Javascript] Pass a query with conversation history!"
+description: "This tutorial will guide you on how to query your BerriAI instance and pass in conversation history, in javascript."
+---
+
+```javascript
+const axios = require("axios").default;
+
+const url = "https://api.berri.ai/query";
+
+const params = {
+  user_email: "ishaan@berri.ai",
+  instance_id: "5fae670c-006c-4c44-96d4-f1b0d04cf1c6",
+  query: "What is your pricing? ",
+  model: "gpt-3.5-turbo",
+  top_k: 5,
+  dynamic_prompt:
+    "You are an AI sales assistant. Answer all questions respectfully. Your company charges $500/mo. Someone from Facebook is asking you a question, they are currently on your company's pricing page. This person has visited the webiste 5 times.",
+  history: JSON.stringify(["hi", "HELLO", "how are you?", "i'm well"]),
+};
+
+axios
+  .get(url, { params })
+  .then((response) => {
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
