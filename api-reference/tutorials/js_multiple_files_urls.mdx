@@ -1,0 +1,29 @@
+---
+title: "[Javascript] Pass multiple files and urls!"
+description: "This tutorial will guide you on how to create a BerriAI instance over multiple files and urls, in javascript."
+---
+
+```javascript
+const fetch = require("node-fetch");
+
+const tmp_list = [
+  "hello who are you",
+  "https://www.hosteeva.com/about-us",
+  "https://www.hosteeva.com/privacy",
+];
+
+const url = "https://api.berri.ai/create_app";
+const formData = new URLSearchParams();
+formData.append("user_email", "ishaan@berri.ai"); // Replace with your form field and value
+formData.append("data_source", JSON.stringify(tmp_list));
+fetch(url, {
+  method: "POST",
+  body: formData,
+})
+  .then((response) => response.text())
+  .then((data) => console.log(data))
+  .catch((error) => {
+    console.log("reaches error");
+    console.error(error);
+  });
+```
