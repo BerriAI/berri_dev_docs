@@ -42,6 +42,26 @@ response = requests.post(url, data=data)
 response.text
 ```
 
+Additionally, you can also send in metadata for each data source.
+
+```python
+import requests
+import json
+
+api_endpoint = "https://berriaiapi.krrishdholakia.repl.co/create_app"
+
+data_source = [{"chunk": "hello", "chunk_metadata": "test_metadata"}, {"chunk": "hey there", "chunk_metadata": "test_metadata_2"}]
+
+data = {
+  "user_email": "krrish@berri.ai",
+  "data_source": json.dumps(data_source)
+}
+
+response = requests.post(api_endpoint, data=data)
+
+print(response.text)
+```
+
 </ParamField>
 
 <ParamField body="template_id" type="string" optional>
