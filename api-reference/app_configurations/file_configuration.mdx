@@ -3,13 +3,23 @@ title: "File Configuration"
 description: "Use this if you want to upload a single file - .csv, .pdf. .docx, .txt, .pptx **or** multiple files - .zip"
 ---
 
-```json 
+**What is this?**
+Configurations are a way of enabling you to improve the quality of responses for your data source. On Berri, you can customize how you want your data to be ingested, queried, as well as the core chatGPT/LLM model prompted.
+
+**When to use this?**
+Either to improve results (experiment with them on https://play.berri.ai/) and/or to ensure all instances follow the same configuration (e.g. if you want to ensure all instances have the same prompt).
+
+**How to use this?**
+
+Basic structure of a file configuration;
+
+```json
 
 {
     advanced: {
-        intent: “qa_doc” or “qa_spreadsheet” # (! This is required. Always specify your intent)
-        search: default, qa_gen, summarize or default # (Optional)
-        app_type: “simple” or “complex” # (Optional - only for qa_doc)
+        intent: “qa_doc” (! This is required. Always specify your intent)
+        search: default, qa_gen, or summarize # (Optional)
+        app_type: “simple” or “complex” # (Optional)
     }
     output_length: # (Optional)
     prompt: # (Optional - use this to help specify how you want your output to be. We also score your prompt, based on how confused it makes the model - the closer to 0, the better.)
@@ -17,3 +27,29 @@ description: "Use this if you want to upload a single file - .csv, .pdf. .docx, 
 }
 
 ```
+
+What does each line mean?
+
+`intent`: This tells us what you want to use this configuration for. For file configurations, this is qa_doc.
+
+`search`: This impacts how you want your data to be ingested.
+
+By default for pdf's / docs / pptx / txt's, we'll try and store each page as a chunk. (You can also optionally parse your document yourself, and send as the chunks - https://docs.berri.ai/api-reference/tutorials/custom_chunking_tutorial)
+
+Let's say you notice that GPT is unable to give you good answers because the reference it's finding is incorrect, `qa_gen` and `summarize` are 2 quick techniques to help improve the likelihood of getting the right chunk for the right user question..
+
+`qa_gen`: This means that for each chunk, we'll generate 5 potential questions a user might ask about it, and embed it alongside the chunk.
+
+`summarize`: This means that for each chunk, we'll generate a summary of the chunk, and embed it alongside the chunk. This is particularly helpful for cleaning up data (e.g. if you're embedding code but your user is asking questions in natural language).
+
+(P.S. If you have additional ideas for improving search, please reach out to us on Discord (https://discord.com/invite/KvG3azf39U)).
+
+`app_type`: Berri provides 2 types of ways of doing search.
+
+`simple`: When a user asks a question, we'll find the most similar chunks to that (you can control how many similar chunks to find when you query - https://docs.berri.ai/api-reference/endpoint/query).
+
+`complex`: Sometimes users ask questions that require multiple pieces of context (e.g. What is the age of the actress who plays Meg in Family Guy? -> This requires us to know - Who plays Meg in Family Guy? Mila Kunis + What is Mila Kunis's age?). To tackle this, we first run the user question through chatGPT, and have it break down that question into sub-components (as seen in the previous example) -> Find the most relevant chunks for each sub-question -> Feed that into chatGPT/GPT-4/whichever model you chose to get the answer to the users question.
+
+`output_length`: Control the length of the model output
+
+`prompt`: Give instructions to the model (chatGPT/GPT-4) for how you want it to answer your users question (e.g. Speak like yoda). Use the playground to test different prompts on your data - https://play.berri.ai/.
