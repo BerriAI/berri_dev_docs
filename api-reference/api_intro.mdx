@@ -119,7 +119,7 @@ url = api_endpoint
 
 user_query = "What do you know?"
 
-final_url = api_endpoint + user_query
+final_url = api_endpoint + "&query=" + user_query
 
 response = requests.get(final_url)
 
