@@ -18,9 +18,28 @@ description: "How to query your Berri Endpoint"
   The query for your instance Example: "Who is ishaan?"
 </ParamField>
 <ParamField query="model" type="string" optional>
-  There are currently 2 types of models Berri supports Default: Uses
-  text-davinci-003 1. **gpt-3.5-turbo**: Uses chatGPT turbo api 2.
-  **text-davinci-003**: uses the GPT-3 model
+  There are currently 4 types of models Berri supports.
+
+**GPT 3**
+`model_type: text-davinci-003`
+
+**[RECOMMENDED] chat GPT**
+`model_type: gpt-3.5-turbo`
+
+**GPT 4**
+`model_type: gpt-4`
+
+**T5**
+`model_type: t5`
+
+t5 is recommended for those looking for an on-prem alternative to GPT.
+
+Try out the different models for your data: https://play.berri.ai/ 🚀
+
+Default: Uses
+text-davinci-003 1. **gpt-3.5-turbo**: Uses chatGPT turbo api 2.
+**text-davinci-003**: uses the GPT-3 model
+
 </ParamField>
 <ParamField query="top_k" type="number" optional>
   All your data cannot fit into GPT's context window. So we break it into chunks and give GPT the most relevant chunk at query time. Use this parameter to control how many chunks of data you want to give GPT. By default this is set to `1`.
