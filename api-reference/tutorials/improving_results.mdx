@@ -1,0 +1,113 @@
+---
+title: "Improving Results - 3 strategies w/ Berri"
+description: "This tutorial will guide you on different approaches to improving your instance/app results with BerriAI's APIs."
+---
+
+```python
+import requests
+import json
+
+# Approach 1: Top K = 5 (picks and feeds chatGPT/LLM the 5 most relevant chunks of data, when user asks a question)
+
+tmp_list = ["hello world", "https://stripe.com/docs/india-accept-international-payments#TransactionPurposeCode"]
+
+url = "https://api.berri.ai/create_app"
+data = {"user_email": "krrish@berri.ai", "data_source": json.dumps(tmp_list)}
+response = requests.post(url, data=data)
+instance_id = response.json()["instance_id"]
+
+print("instance created!")
+
+url = "https://api.berri.ai/query"
+
+querystring = {
+"user_email": "ishaan@berri.ai",
+"instance_id": instance_id,
+"model": "gpt-3.5-turbo",
+"top_k": 5
+}
+
+questions = ["what do you know?", "hi"]
+
+for question in questions:
+  querystring["query"] = question
+  response = requests.get(url, params=querystring)
+  print(response.json()["response"])
+  print("====")
+
+
+
+# # # Approach 2: QA Gen - improve search by generating potential questions for each chunk of data + Top K = 5 (picks and feeds chatGPT/LLM the 5 most relevant chunks of data, when user asks a question)
+
+url = "https://api.berri.ai/create_template"
+
+data = {"advanced": {"intent": "qa_doc", "search": "qa_gen"}, "prompt": "Be legal and ethical"}
+
+response = requests.post(url, data={"app_config": json.dumps(data)})
+
+template_id = response.json()["template_id"]
+
+tmp_list = ["hello world", "hi, how's it going?"]
+
+url = "https://api.berri.ai/create_app"
+data = {"user_email": "krrish@berri.ai", "data_source": json.dumps(tmp_list), "template_id":template_id}
+response = requests.post(url, data=data)
+print(response.text)
+instance_id = response.json()["instance_id"]
+
+print("instance created!")
+
+url = "https://api.berri.ai/query"
+
+querystring = {
+"user_email": "ishaan@berri.ai",
+"instance_id": instance_id,
+"model": "gpt-3.5-turbo",
+"top_k": "5"
+}
+
+questions = ["what do you know?", "hi"]
+
+for question in questions:
+  querystring["query"] = question
+  response = requests.get(url, params=querystring)
+  print(response.json()["response"])
+  print("====")
+
+
+# # Approach 3: Complex QA [Warning: Far slower!] - we first pass the user question to chatGPT/LLM to break it down into more specific sub-questions -> we then query our knowledge base with this information -> the combined chunks of data (answers from all the sub-questions) are then fed into chatGPT/LLM to come up with a final answer
+
+url = "https://api.berri.ai/create_template"
+
+data = {"advanced": {"intent": "qa_doc", "app_type": "complex"}, "prompt": "Be legal and ethical"}
+
+response = requests.post(url, data={"app_config": json.dumps(data)})
+template_id = response.json()["template_id"]
+print(response.text)
+
+tmp_list = ["https://stripe.com/docs/india-accept-international-payments#TransactionPurposeCode"]
+
+url = "https://api.berri.ai/create_app"
+data = {"user_email": "krrish@berri.ai", "data_source": json.dumps(tmp_list), "template_id":template_id}
+response = requests.post(url, data=data)
+instance_id = response.json()["instance_id"]
+
+print("instance created!")
+
+url = "https://api.berri.ai/query"
+
+querystring = {
+"user_email": "ishaan@berri.ai",
+"instance_id": instance_id,
+"model": "gpt-3.5-turbo",
+"top_k": "5"
+}
+
+questions = ["what do you know?", "hi"]
+
+for question in questions:
+  querystring["query"] = question
+  response = requests.get(url, params=querystring)
+  print(response.json()["response"])
+  print("====")
+```

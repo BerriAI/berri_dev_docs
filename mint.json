@@ -58,7 +58,8 @@
         "api-reference/tutorials/custom_chunking_tutorial",
         "api-reference/tutorials/slackbot_tutorial",
         "api-reference/tutorials/js_query_with_history",
-        "api-reference/tutorials/js_multiple_files_urls"
+        "api-reference/tutorials/js_multiple_files_urls",
+        "api-reference/tutorials/improving_results"
       ]
     },
     {
