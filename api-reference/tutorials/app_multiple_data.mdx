@@ -1,0 +1,23 @@
+---
+title: "Create an Instance with multiple Data Sources"
+description: "This tutorial will guide you through creating an instance with multiple data sources"
+---
+
+
+import requests
+
+url = "https://api.berri.ai/create_app"
+
+payload={'user_email': 'ishaan@berri.ai',
+'data_source': ' ["hello world", "https://stripe.com/docs/india-accept-international-payments#TransactionPurposeCode"]'}
+files=[
+  ('data_source',('Ishaan_Jaffer_Resume_SWE_2022.pdf',open('/Downloads/Ishaan_Jaffer_Resume_SWE_2022.pdf','rb'),'application/pdf')),
+  ('file3',('latam_test.html',open('/Downloads/latam_test.html','rb'),'text/html')),
+  ('file4',('Balaji Srinivasan on the Network State and How to Start a New Country.docx',open('/Downloads/Balaji Srinivasan on the Network State and How to Start a New Country.docx','rb'),'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
+]
+headers = {}
+
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+print(response.text)
+
