@@ -33,3 +33,21 @@ print("playground link:", response.json()['playground_endpoint'])
 
 ```
 
+1. How to Send Multiple Files
+
+Define a dictionary named files that contains the files you want to upload as part of the request. The dictionary has key-value pairs, each representing a file to be uploaded:
+NOTE: You can name your files whatever you'd like
+
+'file1': The first file to be uploaded, which is a PDF file named 'proj1.pdf'.
+'file2': The second file to be uploaded, which is a PDF file named 'proj2.pdf'.
+'file3': The third file to be uploaded, which is a DOCX file named 'geo.docx'.
+'file4': The fourth file to be uploaded, which is an HTML file named 'supabase.html'.
+
+2. Sending multiple urls and strings:
+Create a dictionary named payload that contains the data you want to send in the request body. The dictionary has two key-value pairs:
+
+'user_email': The email address of the user
+'data_source': A string representation of a list containing your URLs and Strings 
+
+Eg definition of data_source 
+'data_source':'["hello world", "https://stripe.com/docs/india-accept-international-payments#TransactionPurposeCode"]'
