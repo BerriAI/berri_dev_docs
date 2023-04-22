@@ -3,6 +3,7 @@ title: "Create an Instance with multiple Data Sources"
 description: "This tutorial will guide you through creating an instance with multiple data sources"
 ---
 
+```python
 
 import requests
 
@@ -20,4 +21,5 @@ headers = {}
 response = requests.request("POST", url, headers=headers, data=payload, files=files)
 
 print(response.text)
+```
 
