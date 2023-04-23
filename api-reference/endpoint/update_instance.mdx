@@ -1,0 +1,37 @@
+---
+title: "Update your Instance Data"
+api: "POST https://api.berri.ai/update_instance"
+description: "Add Text Data to your Berri Instance"
+---
+
+This endpoint allows you to update an existing instance with new data. 
+You need to provide the data source URL, the user email, and the instance ID as part of the request.
+
+Request Parameters
+
+<ParamField query="user_email" type="string" required>
+  The email address you are using on your berri.ai account Example:
+  ishaan@berri.ai
+</ParamField>
+
+<ParamField query="instance_id" type="string" required>
+  The instance you want to add data to, create_app returns an instance_id that you should use here
+</ParamField>
+
+
+<ParamField body="data_source" type="string/file">
+You can either send a **single data source**: a single file (`.pdf`, `.zip`, `.pptx`, `.docx`, `.txt`) or a website/API URL.
+</ParamField>
+
+
+### Response
+
+<ResponseField name="message" type="string">
+    returns Data updated successfully on successful update
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Returns success on successful update 
+</ResponseField>
+
+
