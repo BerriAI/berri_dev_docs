@@ -14,7 +14,7 @@ description: "How to evaluate your Berri App/Instance"
   The instance you want to query, create_app returns an instance_id that you can
   query here
 </ParamField>
-<ParamField query="data_source" type="file">
+<ParamField query="data_source" oneOf type="file" type="string">
   This must be a `.csv`. Ensure all questions are under a column called
   'Questions'.
 </ParamField>
