@@ -1,6 +1,6 @@
 ---
 title: "Run Testing"
-api: "GET https://api.berri.ai/eval"
+api: "POST https://api.berri.ai/eval"
 description: "How to evaluate your Berri App/Instance"
 ---
 
@@ -14,7 +14,7 @@ description: "How to evaluate your Berri App/Instance"
   The instance you want to query, create_app returns an instance_id that you can
   query here
 </ParamField>
-<ParamField query="data_source" oneOf type="file" type="string">
+<ParamField query="data_source" type="file">
   This must be a `.csv`. Ensure all questions are under a column called
   'Questions'.
 </ParamField>
@@ -23,41 +23,55 @@ description: "How to evaluate your Berri App/Instance"
 
 ```python python
 import requests
+import json
 
-url = "https://api.berri.ai/query"
+# Call the eval endpoint
 
-querystring = {
-"user_email": "ishaan@berri.ai",
-"instance_id": "6663d98e-f3e2-42b9-a79e-2d92199b85fa",
-"query": "who is ishaan",
-"model": "gpt-3.5-turbo"
-}
+url = "https://api.berri.ai/eval"
 
-response = requests.get(url, params=querystring)
+data = {"instance_id": "44b52369-7852-487f-ba16-476f0ebeb372", "user_email": "krrish@berri.ai"}
+
+# Always pass in a .csv. Ensure all your questions are under a column called 'Questions'
+files = {'data_source': open('test_set.csv', 'rb')}
+
+response = requests.post(url, files=files, data=data)
 
 print(response.text)
 
+api_endpoint = response.json()
 ```
 
 ```javascript javascript
-const axios = require("axios").default;
+const fs = require("fs");
+const axios = require("axios");
 
-const url = "https://api.berri.ai/query";
+const instance_id = "44b52369-7852-487f-ba16-476f0ebeb372";
+const url = "https://api.berri.ai/eval";
 
-const params = {
-  user_email: "ishaan@berri.ai",
-  instance_id: "6663d98e-f3e2-42b9-a79e-2d92199b85fa",
-  query: "who is ishaan",
-  model: "gpt-3.5-turbo",
+// Read contents of CSV file
+const csvData = fs.readFileSync("./test_set.csv", "utf-8");
+
+// Create a new Blob object from the CSV data
+const csvBlob = new Blob([csvData], { type: "text/csv" });
+
+const data = new FormData();
+data.append("instance_id", instance_id);
+data.append("user_email", "krrish@berri.ai");
+data.append("data_source", csvBlob);
+
+const headers = {
+  "Content-Type": "multipart/form-data",
 };
 
+console.log("data: ", data);
 axios
-  .get(url, { params })
+  .post(url, data, { headers })
   .then((response) => {
-    console.log(response.data);
+    console.log("Upload successful!  Server responded with:", response.data);
   })
   .catch((error) => {
-    console.error(error);
+    console.error("Upload failed:", error.stack);
+    console.trace();
   });
 ```
 
