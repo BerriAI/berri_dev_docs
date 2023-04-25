@@ -46,7 +46,8 @@
         "api-reference/endpoint/query",
         "api-reference/endpoint/update_instance_data",
         "api-reference/endpoint/finetuning",
-        "api-reference/endpoint/delete_instance"
+        "api-reference/endpoint/delete_instance",
+        "api-reference/endpoint/eval"
       ]
     },
     {
