@@ -1,0 +1,61 @@
+---
+title: "Update your Instance Data"
+api: "POST https://api.berri.ai/update_instance"
+description: "Add Data (URLs, Files) to your Berri Instance"
+---
+
+This endpoint allows you to update an existing instance with new data. 
+You need to provide the data source URL, the user email, and the instance ID as part of the request.
+
+Request Parameters
+
+<ParamField query="user_email" type="string" required>
+  The email address you are using on your berri.ai account Example:
+  ishaan@berri.ai
+</ParamField>
+
+<ParamField query="instance_id" type="string" required>
+  The instance you want to add data to, create_app returns an instance_id that you should use here
+</ParamField>
+
+
+<ParamField body="data_source" type="string">
+You can either send a **single data source**: a single file (`.pdf`, `.zip`, `.pptx`, `.docx`, `.txt`) or a website/API URL.
+</ParamField>
+
+
+### Response
+
+<ResponseField name="message" type="string">
+    returns Data updated successfully on successful update
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Returns success on successful update 
+</ResponseField>
+
+
+<RequestExample>
+
+```javascript javascript
+const url = "https://api.berri.ai/update_instance";
+
+// Create a FormData object
+const formData = new FormData();
+// Append the key-value pair to the FormData object
+formData.append('data_source', 'https://warmly.ai/');
+formData.append('user_email', 'ishaan@berri.ai');
+formData.append('instance_id', 'd9a80b24-bb81-4c5d-bb76-5034bbdf9fed');
+
+fetch(url, {
+  method: 'POST',
+  body: formData // Use the FormData object as the request body
+})
+  .then(response => response.text())
+  .then(text => console.log(text))
+  .catch(error => console.error('Error:', error));
+
+```
+
+</RequestExample>
+

@@ -44,7 +44,7 @@
         "api-reference/endpoint/create_template",
         "api-reference/endpoint/create_app",
         "api-reference/endpoint/query",
-        "api-reference/endpoint/update_instance_data",
+        "api-reference/endpoint/update_instance",
         "api-reference/endpoint/finetuning",
         "api-reference/endpoint/delete_instance",
         "api-reference/endpoint/eval"
@@ -53,6 +53,7 @@
     {
       "group": "Tutorials",
       "pages": [
+        "api-reference/tutorials/app_multiple_data",
         "api-reference/tutorials/substack_tutorial",
         "api-reference/tutorials/website_embed",
         "api-reference/tutorials/classification_tutorial",
