@@ -76,15 +76,15 @@
       "group": "Additional Resources",
       "pages": [
         "api-reference/resources/gallery",
-        "api-reference/resources/roadmap"
+        "api-reference/resources/roadmap",
+        "api-reference/resources/berri_to_work"
       ]
     },
     {
       "group": "Support & FAQs",
       "pages": [
         "api-reference/faqs-support/faqs",
-        "api-reference/faqs-support/data",
-        "api-reference/faqs-support/berri_to_work"
+        "api-reference/faqs-support/data"
       ]
     }
   ],
