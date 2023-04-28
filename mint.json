@@ -83,7 +83,8 @@
       "group": "Support & FAQs",
       "pages": [
         "api-reference/faqs-support/faqs",
-        "api-reference/faqs-support/data"
+        "api-reference/faqs-support/data",
+        "api-reference/faqs-support/berri_to_work"
       ]
     }
   ],
