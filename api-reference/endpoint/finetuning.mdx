@@ -6,7 +6,8 @@ description: "Finetune your instance by providing it context and correct answer"
 ---
 
 ### Fine-tune
-This endpoint is used to finetune an instance by passing 
+
+This endpoint is used to finetune an instance by passing
 in the required information as parameters in the request.
 
 Request Body
@@ -24,32 +25,63 @@ The request body should contain a list of JSON objects, with each object contain
   The request body should contain a list of JSON objects, with each object containing both context 
   and correct_response attributes. The structure of the request body should be as follows:
 
-  ```
-    [  
-        {    
-            "context": "In what year did Neil Armstrong land on the moon?",    
-            "correct_response": "1969"  
-        }, 
-        {    "context": "Who is the author of the book 'To Kill a Mockingbird'?",
-            "correct_response": "Harper Lee"  
-        },  
-        {    "context": "What is the capital of France?",    
-            "correct_response": "Paris"  
-        }
-    ]
-  ```
+```
+  [
+      {
+          "context": "In what year did Neil Armstrong land on the moon?",
+          "correct_response": "1969"
+      },
+      {    "context": "Who is the author of the book 'To Kill a Mockingbird'?",
+          "correct_response": "Harper Lee"
+      },
+      {    "context": "What is the capital of France?",
+          "correct_response": "Paris"
+      }
+  ]
+```
+
 </ParamField>
 
 ### Response
 
 <ResponseField name="status" type="string">
-  A string indicating the status of the request. 
-  This will be "success" if the request was successful and the feedback was stored
+  A string indicating the status of the request. This will be "success" if the
+  request was successful and the feedback was stored
 </ResponseField>
 
 <ResponseField name="api_endpoint" type="string">
   Your api endpoint of the finetuned instance
 </ResponseField>
 
+<RequestExample>
+```python
+import requests
+import json
+
+payload = [{
+"context": "In what year did Neil Armstrong land on the moon?",
+"correct_response": "1969"
+}, {
+"context": "Who is the author of the book 'To Kill a Mockingbird'?",
+"correct_response": "Harper Lee"
+}, {
+"context": "What is the capital of France?",
+"correct_response": "Paris"
+}]
+
+url = "https://api.berri.ai/finetune_instance"
+args = {
+"user_email": "krrish@berri.ai",
+"instance_id": "7156c47f-2f70-4c81-a622-5dc21ef716d2"
+}
+headers = {'Content-Type': 'application/json'}
+data = json.dumps(payload)
+response = requests.post(url, params=args, headers=headers, data=data)
+print(response.text)
+
+```
+</RequestExample>
 
 
+
+```
