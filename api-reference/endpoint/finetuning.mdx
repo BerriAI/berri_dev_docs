@@ -81,7 +81,44 @@ print(response.text)
 
 ```
 </RequestExample>
+<RequestExample>
+```php
+<?php
 
+    $payload = array(
+        array(
+            "context" => "In what year did Neil Armstrong land on the moon?",
+            "correct_response" => "1969"
+        ),
+        array(
+            "context" => "Who is the author of the book 'To Kill a Mockingbird'?",
+            "correct_response" => "Harper Lee"
+        ),
+        array(
+            "context" => "What is the capital of France?",
+            "correct_response" => "Paris"
+        )
+    );
 
+    $url = "https://api.berri.ai/finetune_instance";
+    $args = array(
+        "user_email" => "krrishdholakia@gmail.com",
+        "instance_id" => "6eaa6359-7d27-4083-98d0-989c9d05930c"
+    );
+    $headers = array('Content-Type' => 'application/json');
+    $data = json_encode($payload);
+    $options = array(
+        'http' => array(
+            'header'  => "Content-Type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => $data
+        )
+    );
+    $context = stream_context_create($options);
+    $response = file_get_contents($url . '?' . http_build_query($args), false, $context);
+    echo $response;
 
+?>
 ```
+
+</RequestExample>
