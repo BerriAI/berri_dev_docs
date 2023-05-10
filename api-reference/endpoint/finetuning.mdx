@@ -54,7 +54,7 @@ The request body should contain a list of JSON objects, with each object contain
 </ResponseField>
 
 <RequestExample>
-```python
+```python python
 import requests
 import json
 
@@ -79,10 +79,7 @@ data = json.dumps(payload)
 response = requests.post(url, params=args, headers=headers, data=data)
 print(response.text)
 
-````
-</RequestExample>
-<RequestExample>
-```php
+```php php
 <?php
 
     $payload = array(
@@ -119,6 +116,6 @@ print(response.text)
     echo $response;
 
 ?>
-````
+```
 
 </RequestExample>
