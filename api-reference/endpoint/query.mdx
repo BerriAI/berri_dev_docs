@@ -17,6 +17,12 @@ description: "How to query your Berri Endpoint"
 <ParamField query="query" type="string">
   The query for your instance Example: "Who is ishaan?"
 </ParamField>
+<ParamField query="rational" type="string">
+  Has to be either 'True' or 'False'. 
+  This makes the model give it's rationale for it's response. 
+  Always in the format: 'Rational: <model rational> Answer: <model answer>'
+  This helps improve model accuracy by up to 30%. 
+</ParamField>
 <ParamField query="model" type="string" optional>
   There are currently 4 types of models Berri supports.
 
