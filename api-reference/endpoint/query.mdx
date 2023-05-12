@@ -17,6 +17,9 @@ description: "How to query your Berri Endpoint"
 <ParamField query="query" type="string">
   The query for your instance Example: "Who is ishaan?"
 </ParamField>
+<ParamField query="dynamic_prompt" type="string">
+  Overwrite the existing prompt for your instance with a prompt passed in at query time!
+</ParamField>
 <ParamField query="rationale" type="boolean">
   The model is prompted to come up with a rationale/think before giving it's answer. Always pass in either `True` or `False`. The returned format is: `Rationale: <model rationale> Answer: <model answer>`. 
   Can help improve accuracy by up to 30%. 
